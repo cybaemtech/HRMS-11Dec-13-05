@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME } from "@/lib/pdf-utils";
 
 interface WarningLetter {
   id: number;
@@ -79,23 +80,27 @@ export default function WarningLettersPage() {
   const generatePDF = (letter: WarningLetter) => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.setTextColor(255, 0, 0);
-    doc.text(`${letter.type.toUpperCase()}`, 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: letter.type.toUpperCase(), subtitle: "Disciplinary Action Notice" });
+    addFooter(doc);
     
+    const refNumber = generateReferenceNumber("WRN");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, letter.issueDate, 68);
+    
+    doc.setFontSize(10);
     doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
-    doc.text(`Date: ${letter.issueDate}`, 20, 40);
+    doc.text(`To: ${letter.employee}`, 15, 78);
+    doc.text(`Department: ${letter.department}`, 15, 85);
     
-    doc.text(`To: ${letter.employee}`, 20, 55);
-    doc.text(`Department: ${letter.department}`, 20, 65);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Subject: ${letter.type} - ${letter.reason}`, 15, 95);
+    doc.setFont("helvetica", "normal");
     
-    doc.setFontSize(11);
-    const content = `Subject: ${letter.type} - ${letter.reason}
+    const content = `Dear ${letter.employee},
 
-Dear ${letter.employee},
-
-This letter serves as a formal ${letter.type.toLowerCase()} regarding your conduct/performance at HRConnect.
+This letter serves as a formal ${letter.type.toLowerCase()} regarding your conduct/performance at ${COMPANY_NAME}.
 
 Issue: ${letter.reason}
 
@@ -105,19 +110,15 @@ You are hereby advised to take immediate corrective action regarding the above m
 
 ${letter.type === "Final Warning" ? "This is your final warning. Any further violations will result in immediate termination." : "Please consider this as a formal warning and take necessary steps to rectify the situation."}
 
-You are required to acknowledge receipt of this letter by signing below.
+You are required to acknowledge receipt of this letter by signing below.`;
 
-Sincerely,
-
-HR Department
-HRConnect
-
-----------------------------
-Employee Signature: ________________
-Date: ________________`;
-
-    const lines = doc.splitTextToSize(content, 170);
-    doc.text(lines, 20, 80);
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(lines, 15, 105);
+    
+    addHRSignature(doc, 195);
+    
+    doc.setFontSize(9);
+    doc.text("Employee Signature: ________________________    Date: ________________", 15, 240);
     
     return doc;
   };

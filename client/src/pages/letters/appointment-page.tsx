@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION } from "@/lib/pdf-utils";
 
 interface AppointmentLetter {
   id: number;
@@ -71,16 +72,19 @@ export default function AppointmentLettersPage() {
   const generatePDF = (letter: AppointmentLetter) => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("APPOINTMENT LETTER", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "APPOINTMENT LETTER", subtitle: "Official Employment Offer" });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Date: ${letter.generatedDate}`, 20, 40);
-    
-    doc.text(`Dear ${letter.employee},`, 20, 60);
+    const refNumber = generateReferenceNumber("APT");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, letter.generatedDate, 68);
     
     doc.setFontSize(11);
-    const content = `We are pleased to offer you the position of ${letter.position} in our ${letter.department} department, effective ${letter.joinDate}.
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Dear ${letter.employee},`, 15, 82);
+    
+    const content = `We are pleased to offer you the position of ${letter.position} in our ${letter.department} department at ${COMPANY_NAME}, effective ${letter.joinDate}.
 
 Your compensation package will include an annual CTC of Rs. ${parseInt(letter.salary || "0").toLocaleString()}.
 
@@ -88,15 +92,12 @@ Please review the terms and conditions of your employment as outlined in this le
 
 We look forward to welcoming you to our team and are confident that you will make significant contributions to our organization.
 
-Please sign and return a copy of this letter to confirm your acceptance of this offer.
+Please sign and return a copy of this letter to confirm your acceptance of this offer.`;
 
-Sincerely,
-
-HR Department
-HRConnect`;
-
-    const lines = doc.splitTextToSize(content, 170);
-    doc.text(lines, 20, 75);
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(lines, 15, 92);
+    
+    addHRSignature(doc, 200);
     
     return doc;
   };

@@ -1,0 +1,171 @@
+import jsPDF from "jspdf";
+
+const COMPANY_NAME = "Cybaemtech Private Limited";
+const COMPANY_TAGLINE = "Beyond Limits";
+const COMPANY_ADDRESS = "401, 4th Floor, Empire Arcade, Beside AV Manis, Sakore Nagar, Viman Nagar, Pune-411014";
+const COMPANY_WEBSITE = "www.cybaemtech.com";
+const HR_NAME = "Nikita Nagargoje";
+const HR_DESIGNATION = "HR Manager";
+
+export interface PDFConfig {
+  title: string;
+  subtitle?: string;
+  showLogo?: boolean;
+  showWatermark?: boolean;
+  showSignature?: boolean;
+  showHeader?: boolean;
+  showFooter?: boolean;
+}
+
+export function addCompanyHeader(doc: jsPDF, config: PDFConfig = { title: "" }) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  
+  doc.setFillColor(0, 98, 179);
+  doc.rect(0, 0, pageWidth, 35, "F");
+  
+  doc.setFillColor(0, 128, 128);
+  doc.rect(0, 35, pageWidth, 3, "F");
+  
+  doc.setFontSize(18);
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.text(COMPANY_NAME, 15, 18);
+  
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "italic");
+  doc.text(COMPANY_TAGLINE, 15, 28);
+  
+  doc.setTextColor(0, 0, 0);
+  
+  if (config.title) {
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(config.title, pageWidth / 2, 50, { align: "center" });
+    
+    if (config.subtitle) {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(config.subtitle, pageWidth / 2, 58, { align: "center" });
+    }
+  }
+}
+
+export function addWatermark(doc: jsPDF) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  
+  doc.saveGraphicsState();
+  
+  doc.setTextColor(240, 240, 240);
+  doc.setFontSize(60);
+  doc.setFont("helvetica", "bold");
+  
+  const text = "CYBAEMTECH";
+  const textWidth = doc.getTextWidth(text);
+  
+  const centerX = pageWidth / 2;
+  const centerY = pageHeight / 2;
+  
+  doc.text(text, centerX - textWidth / 2 + 40, centerY + 20, {
+    angle: 45
+  });
+  
+  doc.restoreGraphicsState();
+  doc.setTextColor(0, 0, 0);
+}
+
+export function addHRSignature(doc: jsPDF, yPosition?: number) {
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const y = yPosition || pageHeight - 50;
+  
+  doc.setDrawColor(0, 0, 0);
+  doc.line(20, y, 80, y);
+  
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(0, 0, 0);
+  doc.text("Authorized Signatory", 20, y + 8);
+  
+  doc.setFont("helvetica", "bold");
+  doc.text(HR_NAME, 20, y + 16);
+  
+  doc.setFont("helvetica", "normal");
+  doc.text(HR_DESIGNATION, 20, y + 24);
+  
+  doc.line(130, y, 190, y);
+  doc.text("Company Seal", 130, y + 8);
+}
+
+export function addFooter(doc: jsPDF) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+  
+  doc.setFillColor(245, 245, 245);
+  doc.rect(0, pageHeight - 20, pageWidth, 20, "F");
+  
+  doc.setDrawColor(0, 98, 179);
+  doc.setLineWidth(0.5);
+  doc.line(0, pageHeight - 20, pageWidth, pageHeight - 20);
+  
+  doc.setFontSize(8);
+  doc.setTextColor(100, 100, 100);
+  doc.setFont("helvetica", "normal");
+  
+  doc.text(COMPANY_ADDRESS, pageWidth / 2, pageHeight - 12, { align: "center" });
+  doc.text(`Email: info@cybaemtech.com | Website: ${COMPANY_WEBSITE}`, pageWidth / 2, pageHeight - 6, { align: "center" });
+}
+
+export function addDocumentDate(doc: jsPDF, date?: string, yPosition: number = 68) {
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const currentDate = date || new Date().toLocaleDateString('en-IN', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+  
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(80, 80, 80);
+  doc.text(`Date: ${currentDate}`, pageWidth - 15, yPosition, { align: "right" });
+}
+
+export function addReferenceNumber(doc: jsPDF, refNumber: string, yPosition: number = 68) {
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(80, 80, 80);
+  doc.text(`Ref No: ${refNumber}`, 15, yPosition);
+}
+
+export function generateReferenceNumber(prefix: string = "CYB"): string {
+  const date = new Date();
+  const year = date.getFullYear().toString().slice(-2);
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  return `${prefix}/${year}${month}/${random}`;
+}
+
+export function initializePDF(config: PDFConfig): jsPDF {
+  const doc = new jsPDF();
+  
+  if (config.showWatermark !== false) {
+    addWatermark(doc);
+  }
+  
+  if (config.showHeader !== false) {
+    addCompanyHeader(doc, config);
+  }
+  
+  if (config.showFooter !== false) {
+    addFooter(doc);
+  }
+  
+  return doc;
+}
+
+export function finalizePDF(doc: jsPDF, config: PDFConfig, signatureY?: number) {
+  if (config.showSignature !== false) {
+    addHRSignature(doc, signatureY);
+  }
+}
+
+export { COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION };

@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME } from "@/lib/pdf-utils";
 
 interface ExperienceLetter {
   id: number;
@@ -71,16 +72,18 @@ export default function ExperienceLettersPage() {
   const generatePDF = (letter: ExperienceLetter) => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("EXPERIENCE CERTIFICATE", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "EXPERIENCE CERTIFICATE", subtitle: "To Whom It May Concern" });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 40);
-    
-    doc.text("TO WHOM IT MAY CONCERN", 20, 55);
+    const refNumber = generateReferenceNumber("EXP");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    const content = `This is to certify that ${letter.employee} was employed with HRConnect as a ${letter.position} in the ${letter.department} department from ${letter.joinDate} to ${letter.lastDay}.
+    doc.setTextColor(0, 0, 0);
+    
+    const content = `This is to certify that ${letter.employee} was employed with ${COMPANY_NAME} as a ${letter.position} in the ${letter.department} department from ${letter.joinDate} to ${letter.lastDay}.
 
 During their tenure of ${letter.tenure}, ${letter.employee} demonstrated excellent professional skills, dedication, and commitment to their responsibilities.
 
@@ -88,18 +91,12 @@ ${letter.employee} performed their duties diligently and was a valuable member o
 
 We wish ${letter.employee} all the best in their future endeavors.
 
-This certificate is issued upon request for employment purposes.
+This certificate is issued upon request for employment purposes.`;
 
-Sincerely,
-
-HR Department
-HRConnect
-
-----------------------------
-Company Seal`;
-
-    const lines = doc.splitTextToSize(content, 170);
-    doc.text(lines, 20, 70);
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(lines, 15, 82);
+    
+    addHRSignature(doc, 180);
     
     return doc;
   };

@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME } from "@/lib/pdf-utils";
 
 interface IncrementLetter {
   id: number;
@@ -79,16 +80,19 @@ export default function IncrementLettersPage() {
   const generatePDF = (letter: IncrementLetter) => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("SALARY INCREMENT LETTER", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "SALARY INCREMENT LETTER", subtitle: "Compensation Revision Notice" });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 40);
-    
-    doc.text(`Dear ${letter.employee},`, 20, 60);
+    const refNumber = generateReferenceNumber("INC");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    const content = `We are pleased to inform you that, based on your performance and contribution to the organization, your salary has been revised with effect from ${letter.effectiveDate}.
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Dear ${letter.employee},`, 15, 82);
+    
+    const content = `We are pleased to inform you that, based on your performance and contribution to ${COMPANY_NAME}, your salary has been revised with effect from ${letter.effectiveDate}.
 
 Current Annual CTC: Rs. ${letter.currentSalary.toLocaleString()}
 Revised Annual CTC: Rs. ${letter.newSalary.toLocaleString()}
@@ -98,15 +102,12 @@ This increment reflects our appreciation for your hard work and dedication to th
 
 Please contact the HR department if you have any questions regarding your revised compensation.
 
-Congratulations on your well-deserved increment!
+Congratulations on your well-deserved increment!`;
 
-Sincerely,
-
-HR Department
-HRConnect`;
-
-    const lines = doc.splitTextToSize(content, 170);
-    doc.text(lines, 20, 75);
+    const lines = doc.splitTextToSize(content, 180);
+    doc.text(lines, 15, 92);
+    
+    addHRSignature(doc, 195);
     
     return doc;
   };

@@ -19,6 +19,7 @@ import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION } from "@/lib/pdf-utils";
 
 export default function Form16TdsPage() {
   const [selectedYear, setSelectedYear] = useState("2023-24");
@@ -113,52 +114,76 @@ export default function Form16TdsPage() {
       year: 'numeric' 
     });
     
+    addWatermark(doc);
+    addFooter(doc);
+    
+    doc.setFillColor(0, 98, 179);
+    doc.rect(0, 0, 210, 35, 'F');
+    
     doc.setFillColor(0, 128, 128);
-    doc.rect(0, 0, 210, 30, 'F');
+    doc.rect(0, 35, 210, 3, 'F');
     
     doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
-    doc.text("FORM NO. 16", 105, 15, { align: 'center' });
+    doc.setFont("helvetica", "bold");
+    doc.text(COMPANY_NAME, 15, 15);
+    
     doc.setFontSize(10);
-    doc.text("[See rule 31(1)(a)]", 105, 22, { align: 'center' });
+    doc.setFont("helvetica", "italic");
+    doc.text("Beyond Limits", 15, 25);
+    
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("FORM NO. 16", 165, 18, { align: 'center' });
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text("[See rule 31(1)(a)]", 165, 26, { align: 'center' });
     
     doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
-    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 40, { align: 'center' });
-    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 48, { align: 'center' });
-    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 48, { align: 'center' });
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(`Generated on: ${currentDate}`, 14, 60);
+    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 55, { align: 'center' });
     
-    doc.setFontSize(12);
+    const refNumber = generateReferenceNumber("F16");
+    doc.setFontSize(9);
+    doc.text(`Ref No: ${refNumber}`, 14, 65);
+    doc.text(`Generated on: ${currentDate}`, 196, 65, { align: 'right' });
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
     doc.text("Part A - Details of Employer and Employee", 14, 75);
-    doc.setDrawColor(0, 128, 128);
+    doc.setDrawColor(0, 98, 179);
+    doc.setLineWidth(0.5);
     doc.line(14, 78, 196, 78);
     
     autoTable(doc, {
       startY: 82,
       head: [],
       body: [
-        ['Name of the Deductor (Employer)', 'HRMS Connect Pvt. Ltd.'],
-        ['TAN of the Deductor', 'MUMH12345F'],
-        ['Address of the Deductor', '123 Business Park, Mumbai, Maharashtra 400001'],
+        ['Name of the Deductor (Employer)', COMPANY_NAME],
+        ['TAN of the Deductor', 'PNEC12345F'],
+        ['Address of the Deductor', COMPANY_ADDRESS],
         ['Name of the Employee', employee.employee],
         ['PAN of the Employee', employee.pan],
         ['Assessment Year', selectedYear === '2023-24' ? '2024-25' : selectedYear === '2022-23' ? '2023-24' : '2022-23'],
       ],
       theme: 'grid',
-      styles: { fontSize: 10 },
+      styles: { fontSize: 9 },
       columnStyles: {
         0: { fontStyle: 'bold', cellWidth: 70 },
-        1: { cellWidth: 100 },
+        1: { cellWidth: 110 },
       },
     });
     
     const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 140;
     
-    doc.setFontSize(12);
-    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 15);
-    doc.line(14, partAEndY + 18, 196, partAEndY + 18);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
+    doc.line(14, partAEndY + 15, 196, partAEndY + 15);
     
     const basicSalary = Math.round(employee.totalIncome * 0.5);
     const hra = Math.round(employee.totalIncome * 0.2);
@@ -166,7 +191,7 @@ export default function Form16TdsPage() {
     const bonus = Math.round(employee.totalIncome * 0.1);
     
     autoTable(doc, {
-      startY: partAEndY + 22,
+      startY: partAEndY + 19,
       head: [['Particulars', 'Amount (Rs.)']],
       body: [
         ['1. Gross Salary', `Rs.${employee.totalIncome.toLocaleString()}`],
@@ -181,15 +206,13 @@ export default function Form16TdsPage() {
         ['6. Tax Deducted at Source', `Rs.${employee.tdsDeducted.toLocaleString()}`],
       ],
       theme: 'striped',
-      headStyles: { fillColor: [0, 128, 128] },
-      styles: { fontSize: 10 },
+      headStyles: { fillColor: [0, 98, 179] },
+      styles: { fontSize: 9 },
     });
     
     const partBEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 220;
     
-    doc.setFontSize(9);
-    doc.setTextColor(100);
-    doc.text("This is a computer-generated certificate and does not require a signature.", 105, partBEndY + 20, { align: 'center' });
+    addHRSignature(doc, partBEndY + 15);
     
     doc.save(`Form16_${employee.employee.replace(/\s+/g, '_')}_${selectedYear}.pdf`);
   };
@@ -215,55 +238,80 @@ export default function Form16TdsPage() {
     const totalDeductions = standardDeduction + section80C + section80D + otherDeductions;
     const taxableIncome = Math.max(0, grossSalary - totalDeductions);
     
+    addWatermark(doc);
+    addFooter(doc);
+    
+    doc.setFillColor(0, 98, 179);
+    doc.rect(0, 0, 210, 35, 'F');
+    
     doc.setFillColor(0, 128, 128);
-    doc.rect(0, 0, 210, 30, 'F');
+    doc.rect(0, 35, 210, 3, 'F');
     
     doc.setFontSize(18);
     doc.setTextColor(255, 255, 255);
-    doc.text("FORM NO. 16", 105, 15, { align: 'center' });
+    doc.setFont("helvetica", "bold");
+    doc.text(COMPANY_NAME, 15, 15);
+    
     doc.setFontSize(10);
-    doc.text("[See rule 31(1)(a)]", 105, 22, { align: 'center' });
+    doc.setFont("helvetica", "italic");
+    doc.text("Beyond Limits", 15, 25);
+    
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("FORM NO. 16", 165, 18, { align: 'center' });
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text("[See rule 31(1)(a)]", 165, 26, { align: 'center' });
     
     doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
-    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 40, { align: 'center' });
-    doc.text(`for Tax Deducted at Source on Salary - AY ${basicForm16Data.assessmentYear}`, 105, 48, { align: 'center' });
-    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 48, { align: 'center' });
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(`Generated on: ${currentDate}`, 14, 60);
+    doc.text(`for Tax Deducted at Source on Salary - AY ${basicForm16Data.assessmentYear}`, 105, 55, { align: 'center' });
     
-    doc.setFontSize(12);
+    const refNumber = generateReferenceNumber("F16");
+    doc.setFontSize(9);
+    doc.text(`Ref No: ${refNumber}`, 14, 65);
+    doc.text(`Generated on: ${currentDate}`, 196, 65, { align: 'right' });
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
     doc.text("Part A - Details of Employer and Employee", 14, 75);
-    doc.setDrawColor(0, 128, 128);
+    doc.setDrawColor(0, 98, 179);
+    doc.setLineWidth(0.5);
     doc.line(14, 78, 196, 78);
     
     autoTable(doc, {
       startY: 82,
       head: [],
       body: [
-        ['Name of the Deductor (Employer)', basicForm16Data.employerName],
-        ['TAN of the Deductor', basicForm16Data.employerTan],
+        ['Name of the Deductor (Employer)', basicForm16Data.employerName || COMPANY_NAME],
+        ['TAN of the Deductor', basicForm16Data.employerTan || 'PNEC12345F'],
+        ['Address of the Deductor', COMPANY_ADDRESS],
         ['Name of the Employee', basicForm16Data.employeeName],
         ['PAN of the Employee', basicForm16Data.pan],
         ['Address of the Employee', basicForm16Data.address || 'N/A'],
         ['Assessment Year', basicForm16Data.assessmentYear],
       ],
       theme: 'grid',
-      styles: { fontSize: 10 },
+      styles: { fontSize: 9 },
       columnStyles: {
         0: { fontStyle: 'bold', cellWidth: 70 },
-        1: { cellWidth: 100 },
+        1: { cellWidth: 110 },
       },
     });
     
     const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 140;
     
-    doc.setFontSize(12);
-    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 15);
-    doc.line(14, partAEndY + 18, 196, partAEndY + 18);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
+    doc.line(14, partAEndY + 15, 196, partAEndY + 15);
     
     autoTable(doc, {
-      startY: partAEndY + 22,
+      startY: partAEndY + 19,
       head: [['Particulars', 'Amount (Rs.)']],
       body: [
         ['1. Gross Salary', `Rs.${grossSalary.toLocaleString()}`],
@@ -280,15 +328,13 @@ export default function Form16TdsPage() {
         ['6. Tax Deducted at Source', `Rs.${tdsDeducted.toLocaleString()}`],
       ],
       theme: 'striped',
-      headStyles: { fillColor: [0, 128, 128] },
-      styles: { fontSize: 10 },
+      headStyles: { fillColor: [0, 98, 179] },
+      styles: { fontSize: 9 },
     });
     
     const partBEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 220;
     
-    doc.setFontSize(9);
-    doc.setTextColor(100);
-    doc.text("This is a computer-generated certificate and does not require a signature.", 105, partBEndY + 20, { align: 'center' });
+    addHRSignature(doc, partBEndY + 15);
     
     doc.save(`Form16_${basicForm16Data.employeeName.replace(/\s+/g, '_')}_${basicForm16Data.assessmentYear}.pdf`);
   };
