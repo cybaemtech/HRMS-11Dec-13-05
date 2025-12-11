@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber } from "@/lib/pdf-utils";
 
 export default function HeadcountReportPage() {
   const [selectedPeriod, setSelectedPeriod] = useState("Q4 2023");
@@ -39,39 +40,49 @@ export default function HeadcountReportPage() {
   const handleExportPDF = () => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("HEADCOUNT REPORT", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "HEADCOUNT REPORT", subtitle: `Period: ${selectedPeriod}` });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Period: ${selectedPeriod}`, 20, 40);
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 50);
+    const refNumber = generateReferenceNumber("HDC");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    doc.text("Summary:", 20, 70);
-    doc.text("Total Headcount: 156 employees", 30, 80);
-    doc.text("New Hires: 18", 30, 90);
-    doc.text("Separations: 6", 30, 100);
-    doc.text("Net Growth Rate: 8.3%", 30, 110);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary:", 15, 80);
     
-    doc.text("Department-wise Breakdown:", 20, 130);
-    
-    let yPos = 145;
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Department", 20, yPos);
+    doc.text("Total Headcount: 156 employees", 25, 88);
+    doc.text("New Hires: 18", 25, 96);
+    doc.text("Separations: 6", 25, 104);
+    doc.text("Net Growth Rate: 8.3%", 25, 112);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Department-wise Breakdown:", 15, 125);
+    
+    let yPos = 135;
+    doc.setFontSize(9);
+    doc.text("Department", 15, yPos);
     doc.text("Headcount", 65, yPos);
     doc.text("New Hires", 100, yPos);
     doc.text("Separations", 135, yPos);
     doc.text("Growth %", 170, yPos);
     
-    yPos += 10;
+    doc.setFont("helvetica", "normal");
+    yPos += 8;
     filteredData.forEach((dept) => {
-      doc.text(dept.department, 20, yPos);
+      doc.text(dept.department, 15, yPos);
       doc.text(dept.headcount.toString(), 65, yPos);
       doc.text(dept.newHires.toString(), 100, yPos);
       doc.text(dept.separations.toString(), 135, yPos);
       doc.text(`${dept.growth}%`, 170, yPos);
-      yPos += 8;
+      yPos += 7;
     });
+    
+    addHRSignature(doc, yPos + 25);
     
     doc.save(`headcount_report_${selectedPeriod.replace(/\s+/g, '_')}.pdf`);
     

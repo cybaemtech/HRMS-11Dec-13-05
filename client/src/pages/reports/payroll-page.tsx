@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME } from "@/lib/pdf-utils";
 
 export default function PayrollReportPage() {
   const [selectedMonth, setSelectedMonth] = useState("January 2024");
@@ -46,39 +47,49 @@ export default function PayrollReportPage() {
   const handleExportPDF = () => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("PAYROLL REPORT", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "PAYROLL REPORT", subtitle: `Period: ${selectedMonth}` });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Period: ${selectedMonth}`, 20, 40);
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 50);
+    const refNumber = generateReferenceNumber("PAY");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    doc.text("Summary:", 20, 70);
-    doc.text("Total Payroll: Rs. 45,60,000", 30, 80);
-    doc.text("Net Disbursed: Rs. 38,25,000", 30, 90);
-    doc.text("Total Deductions: Rs. 7,35,000", 30, 100);
-    doc.text("Employees Paid: 156", 30, 110);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary:", 15, 80);
     
-    doc.text("Department-wise Breakdown:", 20, 130);
-    
-    let yPos = 145;
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Department", 20, yPos);
+    doc.text("Total Payroll: Rs. 45,60,000", 25, 88);
+    doc.text("Net Disbursed: Rs. 38,25,000", 25, 96);
+    doc.text("Total Deductions: Rs. 7,35,000", 25, 104);
+    doc.text("Employees Paid: 156", 25, 112);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Department-wise Breakdown:", 15, 125);
+    
+    let yPos = 135;
+    doc.setFontSize(9);
+    doc.text("Department", 15, yPos);
     doc.text("Employees", 55, yPos);
     doc.text("Gross Salary", 85, yPos);
     doc.text("Deductions", 125, yPos);
     doc.text("Net Salary", 165, yPos);
     
-    yPos += 10;
+    doc.setFont("helvetica", "normal");
+    yPos += 8;
     filteredData.forEach((dept) => {
-      doc.text(dept.department, 20, yPos);
+      doc.text(dept.department, 15, yPos);
       doc.text(dept.employees.toString(), 55, yPos);
       doc.text(formatCurrency(dept.gross), 85, yPos);
       doc.text(formatCurrency(dept.deductions), 125, yPos);
       doc.text(formatCurrency(dept.net), 165, yPos);
-      yPos += 8;
+      yPos += 7;
     });
+    
+    addHRSignature(doc, yPos + 25);
     
     doc.save(`payroll_report_${selectedMonth.replace(/\s+/g, '_')}.pdf`);
     

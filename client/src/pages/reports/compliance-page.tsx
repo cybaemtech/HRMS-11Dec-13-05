@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME } from "@/lib/pdf-utils";
 
 interface ComplianceItem {
   id: number;
@@ -79,39 +80,49 @@ export default function ComplianceReportsPage() {
   const handleExportPDF = () => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("COMPLIANCE REPORT", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "COMPLIANCE REPORT", subtitle: `Fiscal Year: ${selectedYear}` });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Fiscal Year: ${selectedYear}`, 20, 40);
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 50);
+    const refNumber = generateReferenceNumber("CMP");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    doc.text("Summary:", 20, 70);
-    doc.text("Compliant: 18 items", 30, 80);
-    doc.text("Pending: 3 items", 30, 90);
-    doc.text("Overdue: 1 item", 30, 100);
-    doc.text("Total Filings: 22", 30, 110);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary:", 15, 80);
     
-    doc.text("Compliance Status:", 20, 130);
-    
-    let yPos = 145;
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Compliance Item", 20, yPos);
-    doc.text("Frequency", 80, yPos);
-    doc.text("Last Filed", 115, yPos);
-    doc.text("Next Due", 150, yPos);
+    doc.text("Compliant: 18 items", 25, 88);
+    doc.text("Pending: 3 items", 25, 96);
+    doc.text("Overdue: 1 item", 25, 104);
+    doc.text("Total Filings: 22", 25, 112);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Compliance Status:", 15, 125);
+    
+    let yPos = 135;
+    doc.setFontSize(9);
+    doc.text("Compliance Item", 15, yPos);
+    doc.text("Frequency", 75, yPos);
+    doc.text("Last Filed", 110, yPos);
+    doc.text("Next Due", 145, yPos);
     doc.text("Status", 180, yPos);
     
-    yPos += 10;
+    doc.setFont("helvetica", "normal");
+    yPos += 8;
     filteredItems.forEach((item) => {
-      doc.text(item.name, 20, yPos);
-      doc.text(item.frequency, 80, yPos);
-      doc.text(item.lastFiled, 115, yPos);
-      doc.text(item.nextDue, 150, yPos);
+      doc.text(item.name, 15, yPos);
+      doc.text(item.frequency, 75, yPos);
+      doc.text(item.lastFiled, 110, yPos);
+      doc.text(item.nextDue, 145, yPos);
       doc.text(item.status, 180, yPos);
-      yPos += 8;
+      yPos += 7;
     });
+    
+    addHRSignature(doc, yPos + 25);
     
     doc.save(`compliance_report_FY_${selectedYear}.pdf`);
     

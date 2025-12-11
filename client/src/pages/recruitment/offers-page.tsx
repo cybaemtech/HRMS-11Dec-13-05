@@ -20,6 +20,7 @@ import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS } from "@/lib/pdf-utils";
 
 interface OfferLetter {
   id: number;
@@ -119,40 +120,30 @@ export default function OfferLettersPage() {
 
   const generateOfferLetterPDF = (offer: OfferLetter) => {
     const doc = new jsPDF();
-    const currentDate = new Date().toLocaleDateString('en-IN', { 
-      day: '2-digit', 
-      month: 'long', 
-      year: 'numeric' 
-    });
     
-    doc.setFillColor(0, 128, 128);
-    doc.rect(0, 0, 210, 35, 'F');
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "OFFER LETTER", subtitle: "Employment Offer" });
+    addFooter(doc);
     
-    doc.setFontSize(22);
-    doc.setTextColor(255, 255, 255);
-    doc.text("OFFER LETTER", 105, 18, { align: 'center' });
+    const refNumber = generateReferenceNumber("OFR");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, offer.sentDate, 68);
+    
     doc.setFontSize(11);
-    doc.text("HRMS Connect Pvt. Ltd.", 105, 28, { align: 'center' });
-    
     doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Dear ${offer.candidate},`, 15, 82);
+    
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text(`Date: ${offer.sentDate}`, 14, 50);
-    doc.text(`Ref: OL/${offer.id}/${new Date().getFullYear()}`, 14, 58);
     
-    doc.setFontSize(12);
-    doc.setFont(undefined!, 'bold');
-    doc.text(`Dear ${offer.candidate},`, 14, 75);
-    
-    doc.setFont(undefined!, 'normal');
-    doc.setFontSize(11);
-    
-    const introText = `We are pleased to offer you the position of ${offer.position} in the ${offer.department} department at HRMS Connect Pvt. Ltd. After careful consideration of your qualifications and experience, we believe you would be a valuable addition to our team.`;
+    const introText = `We are pleased to offer you the position of ${offer.position} in the ${offer.department} department at ${COMPANY_NAME}. After careful consideration of your qualifications and experience, we believe you would be a valuable addition to our team.`;
     const splitIntro = doc.splitTextToSize(introText, 180);
-    doc.text(splitIntro, 14, 88);
+    doc.text(splitIntro, 15, 92);
     
-    doc.setFontSize(12);
-    doc.setFont(undefined!, 'bold');
-    doc.text("Position Details:", 14, 115);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Position Details:", 15, 115);
     
     autoTable(doc, {
       startY: 120,
@@ -166,7 +157,7 @@ export default function OfferLettersPage() {
         ['Expected Joining Date', offer.joiningDate],
       ],
       theme: 'grid',
-      styles: { fontSize: 10, cellPadding: 4 },
+      styles: { fontSize: 9, cellPadding: 3 },
       columnStyles: {
         0: { fontStyle: 'bold', cellWidth: 50, fillColor: [240, 240, 240] },
         1: { cellWidth: 120 },
@@ -175,32 +166,23 @@ export default function OfferLettersPage() {
     
     const tableEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 180;
     
-    doc.setFont(undefined!, 'bold');
-    doc.setFontSize(12);
-    doc.text("Additional Details:", 14, tableEndY + 15);
-    
-    doc.setFont(undefined!, 'normal');
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(10);
+    doc.text("Additional Details:", 15, tableEndY + 12);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
     const detailsText = doc.splitTextToSize(offer.offerDetails, 180);
-    doc.text(detailsText, 14, tableEndY + 25);
+    doc.text(detailsText, 15, tableEndY + 20);
     
-    doc.setFontSize(10);
-    doc.text("This offer is subject to successful background verification and document verification.", 14, tableEndY + 45);
-    doc.text("Please confirm your acceptance by signing and returning this letter.", 14, tableEndY + 53);
+    doc.setFontSize(9);
+    doc.text("This offer is subject to successful background verification and document verification.", 15, tableEndY + 35);
+    doc.text("Please confirm your acceptance by signing and returning this letter.", 15, tableEndY + 42);
     
-    doc.setFont(undefined!, 'bold');
-    doc.text("We look forward to having you on our team!", 14, tableEndY + 68);
+    doc.setFont("helvetica", "bold");
+    doc.text("We look forward to having you on our team!", 15, tableEndY + 54);
     
-    doc.setFont(undefined!, 'normal');
-    doc.text("Best Regards,", 14, tableEndY + 85);
-    doc.text("Human Resources Department", 14, tableEndY + 93);
-    doc.text("HRMS Connect Pvt. Ltd.", 14, tableEndY + 101);
-    
-    doc.setDrawColor(0, 128, 128);
-    doc.line(14, 275, 196, 275);
-    doc.setFontSize(8);
-    doc.setTextColor(100);
-    doc.text("123 Business Park, Mumbai, Maharashtra 400001 | Tel: +91-22-12345678 | Email: hr@hrmsconnect.com", 105, 282, { align: 'center' });
+    addHRSignature(doc, tableEndY + 65);
     
     doc.save(`Offer_Letter_${offer.candidate.replace(/\s+/g, '_')}.pdf`);
   };

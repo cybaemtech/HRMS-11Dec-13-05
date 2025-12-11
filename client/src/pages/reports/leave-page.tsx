@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber } from "@/lib/pdf-utils";
 
 export default function LeaveReportPage() {
   const [selectedYear, setSelectedYear] = useState("2024");
@@ -38,37 +39,47 @@ export default function LeaveReportPage() {
   const handleExportPDF = () => {
     const doc = new jsPDF();
     
-    doc.setFontSize(20);
-    doc.text("LEAVE REPORT", 105, 20, { align: "center" });
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "LEAVE REPORT", subtitle: `Year: ${selectedYear}` });
+    addFooter(doc);
     
-    doc.setFontSize(12);
-    doc.text(`Year: ${selectedYear}`, 20, 40);
-    doc.text(`Generated: ${new Date().toLocaleDateString()}`, 20, 50);
+    const refNumber = generateReferenceNumber("LVE");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
     
     doc.setFontSize(11);
-    doc.text("Summary:", 20, 70);
-    doc.text("Total Leave Taken: 456 days", 30, 80);
-    doc.text("Pending Requests: 12", 30, 90);
-    doc.text("Avg. Leave/Employee: 8.5 days", 30, 100);
-    doc.text("Total Leave Balance: 1,245 days", 30, 110);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary:", 15, 80);
     
-    doc.text("Leave Type Breakdown:", 20, 130);
-    
-    let yPos = 145;
+    doc.setFont("helvetica", "normal");
     doc.setFontSize(10);
-    doc.text("Leave Type", 20, yPos);
-    doc.text("Taken", 80, yPos);
+    doc.text("Total Leave Taken: 456 days", 25, 88);
+    doc.text("Pending Requests: 12", 25, 96);
+    doc.text("Avg. Leave/Employee: 8.5 days", 25, 104);
+    doc.text("Total Leave Balance: 1,245 days", 25, 112);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Leave Type Breakdown:", 15, 125);
+    
+    let yPos = 135;
+    doc.setFontSize(9);
+    doc.text("Leave Type", 15, yPos);
+    doc.text("Taken", 75, yPos);
     doc.text("Balance", 110, yPos);
     doc.text("Utilization %", 150, yPos);
     
-    yPos += 10;
+    doc.setFont("helvetica", "normal");
+    yPos += 8;
     filteredData.forEach((item) => {
-      doc.text(item.type, 20, yPos);
-      doc.text(`${item.taken} days`, 80, yPos);
+      doc.text(item.type, 15, yPos);
+      doc.text(`${item.taken} days`, 75, yPos);
       doc.text(`${item.balance} days`, 110, yPos);
       doc.text(`${item.utilized}%`, 150, yPos);
-      yPos += 8;
+      yPos += 7;
     });
+    
+    addHRSignature(doc, yPos + 25);
     
     doc.save(`leave_report_${selectedYear}.pdf`);
     
