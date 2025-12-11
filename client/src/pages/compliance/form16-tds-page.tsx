@@ -114,39 +114,37 @@ export default function Form16TdsPage() {
       year: 'numeric' 
     });
     
-    addWatermark(doc);
     addFooter(doc);
-    addCompanyHeader(doc, { title: "" });
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text("FORM NO. 16", 105, 48, { align: 'center' });
+    doc.text("FORM NO. 16", 105, 20, { align: 'center' });
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("[See rule 31(1)(a)]", 105, 55, { align: 'center' });
+    doc.text("[See rule 31(1)(a)]", 105, 27, { align: 'center' });
     
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 62, { align: 'center' });
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 35, { align: 'center' });
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 69, { align: 'center' });
+    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 42, { align: 'center' });
     
     const refNumber = generateReferenceNumber("F16");
     doc.setFontSize(9);
-    doc.text(`Ref No: ${refNumber}`, 14, 78);
-    doc.text(`Generated on: ${currentDate}`, 196, 78, { align: 'right' });
+    doc.text(`Ref No: ${refNumber}`, 14, 50);
+    doc.text(`Generated on: ${currentDate}`, 196, 50, { align: 'right' });
     
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.text("Part A - Details of Employer and Employee", 14, 88);
-    doc.setDrawColor(207, 69, 32);
+    doc.text("Part A - Details of Employer and Employee", 14, 60);
+    doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(14, 91, 196, 91);
+    doc.line(14, 63, 196, 63);
     
     autoTable(doc, {
-      startY: 95,
+      startY: 67,
       head: [],
       body: [
         ['Name of the Deductor (Employer)', COMPANY_NAME],
@@ -164,12 +162,12 @@ export default function Form16TdsPage() {
       },
     });
     
-    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 150;
+    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 120;
     
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
     doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
-    doc.setDrawColor(207, 69, 32);
+    doc.setDrawColor(0, 0, 0);
     doc.line(14, partAEndY + 15, 196, partAEndY + 15);
     
     const basicSalary = Math.round(employee.totalIncome * 0.5);
@@ -193,13 +191,9 @@ export default function Form16TdsPage() {
         ['6. Tax Deducted at Source', `Rs.${employee.tdsDeducted.toLocaleString()}`],
       ],
       theme: 'striped',
-      headStyles: { fillColor: [207, 69, 32] },
+      headStyles: { fillColor: [80, 80, 80] },
       styles: { fontSize: 9 },
     });
-    
-    const partBEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 220;
-    
-    addHRSignature(doc, partBEndY + 15);
     
     doc.save(`Form16_${employee.employee.replace(/\s+/g, '_')}_${selectedYear}.pdf`);
   };
@@ -225,39 +219,37 @@ export default function Form16TdsPage() {
     const totalDeductions = standardDeduction + section80C + section80D + otherDeductions;
     const taxableIncome = Math.max(0, grossSalary - totalDeductions);
     
-    addWatermark(doc);
     addFooter(doc);
-    addCompanyHeader(doc, { title: "" });
     
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text("FORM NO. 16", 105, 48, { align: 'center' });
+    doc.text("FORM NO. 16", 105, 20, { align: 'center' });
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
-    doc.text("[See rule 31(1)(a)]", 105, 55, { align: 'center' });
+    doc.text("[See rule 31(1)(a)]", 105, 27, { align: 'center' });
     
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
-    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 62, { align: 'center' });
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 35, { align: 'center' });
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    doc.text(`for Tax Deducted at Source on Salary - AY ${basicForm16Data.assessmentYear}`, 105, 69, { align: 'center' });
+    doc.text(`for Tax Deducted at Source on Salary - AY ${basicForm16Data.assessmentYear}`, 105, 42, { align: 'center' });
     
     const refNumber = generateReferenceNumber("F16");
     doc.setFontSize(9);
-    doc.text(`Ref No: ${refNumber}`, 14, 78);
-    doc.text(`Generated on: ${currentDate}`, 196, 78, { align: 'right' });
+    doc.text(`Ref No: ${refNumber}`, 14, 50);
+    doc.text(`Generated on: ${currentDate}`, 196, 50, { align: 'right' });
     
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.text("Part A - Details of Employer and Employee", 14, 88);
-    doc.setDrawColor(207, 69, 32);
+    doc.text("Part A - Details of Employer and Employee", 14, 60);
+    doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(14, 91, 196, 91);
+    doc.line(14, 63, 196, 63);
     
     autoTable(doc, {
-      startY: 95,
+      startY: 67,
       head: [],
       body: [
         ['Name of the Deductor (Employer)', basicForm16Data.employerName || COMPANY_NAME],
@@ -276,12 +268,12 @@ export default function Form16TdsPage() {
       },
     });
     
-    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 150;
+    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 120;
     
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
     doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
-    doc.setDrawColor(207, 69, 32);
+    doc.setDrawColor(0, 0, 0);
     doc.line(14, partAEndY + 15, 196, partAEndY + 15);
     
     autoTable(doc, {
@@ -302,13 +294,9 @@ export default function Form16TdsPage() {
         ['6. Tax Deducted at Source', `Rs.${tdsDeducted.toLocaleString()}`],
       ],
       theme: 'striped',
-      headStyles: { fillColor: [207, 69, 32] },
+      headStyles: { fillColor: [80, 80, 80] },
       styles: { fontSize: 9 },
     });
-    
-    const partBEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 220;
-    
-    addHRSignature(doc, partBEndY + 15);
     
     doc.save(`Form16_${basicForm16Data.employeeName.replace(/\s+/g, '_')}_${basicForm16Data.assessmentYear}.pdf`);
   };
