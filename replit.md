@@ -18,6 +18,19 @@ HR Connect is a comprehensive HR management system built with React, TypeScript,
 - **Multi-role Support**: Admin, HR, Manager, Employee, and Developer roles
 
 ## Recent Changes
+- **2025-12-11**: Enhanced all PDF documents with consistent Cybaemtech branding
+  - Created shared PDF utility (`client/src/lib/pdf-utils.ts`) with reusable functions for:
+    - Company logo with "Beyond Limits" tagline
+    - Diagonal watermark ("Cybaemtech Proprietary") 
+    - HR signature block with authorized signatory
+    - Consistent header, footer, reference numbers, and date formatting
+  - Updated 12+ document generation pages to use the PDF utility:
+    - HR Letters: Appointment, Experience, Increment, Warning
+    - Compliance: Form 16 (TDS), PF/ESI/PT Reports
+    - Recruitment: Offer Letters
+    - Reports: Payroll, Compliance, Attendance, Headcount, Leave
+  - All PDFs now have professional branding with company logo, watermark, and HR signature
+  
 - **2025-12-11**: Implemented full functionality for HR Letters, Self Service, and Reports pages
   - HR Letters (4 pages): Generate letter dialogs, view/download PDF, send functionality
   - Self Service (4 pages): Edit profile with photo upload, payslip view/download, document upload/download, attendance export

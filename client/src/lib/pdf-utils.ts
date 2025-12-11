@@ -1,11 +1,11 @@
 import jsPDF from "jspdf";
 
-const COMPANY_NAME = "Cybaemtech Private Limited";
-const COMPANY_TAGLINE = "Beyond Limits";
-const COMPANY_ADDRESS = "401, 4th Floor, Empire Arcade, Beside AV Manis, Sakore Nagar, Viman Nagar, Pune-411014";
-const COMPANY_WEBSITE = "www.cybaemtech.com";
-const HR_NAME = "Nikita Nagargoje";
-const HR_DESIGNATION = "HR Manager";
+export const COMPANY_NAME = "Cybaemtech Private Limited";
+export const COMPANY_TAGLINE = "Beyond Limits";
+export const COMPANY_ADDRESS = "401, 4th Floor, Empire Arcade, Beside AV Manis, Sakore Nagar, Viman Nagar, Pune-411014";
+export const COMPANY_WEBSITE = "www.cybaemtech.com";
+export const HR_NAME = "Nikita Nagargoje";
+export const HR_DESIGNATION = "HR Manager";
 
 export interface PDFConfig {
   title: string;
@@ -167,5 +167,3 @@ export function finalizePDF(doc: jsPDF, config: PDFConfig, signatureY?: number) 
     addHRSignature(doc, signatureY);
   }
 }
-
-export { COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION };
