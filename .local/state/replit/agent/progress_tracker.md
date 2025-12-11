@@ -226,3 +226,5 @@
 [x] 226. MIGRATION COMPLETE: All items verified and marked as done - HR system fully operational in Replit environment
 [x] 227. Added ASN Technology logo to all PDF documents - header, watermark, and footer updated with ASN branding
 [x] 228. Updated company branding from Cybaemtech to ASN HR Consultancy & Services across all generated documents
+[x] 229. Decreased logo size in document headers (40x25) and watermarks (80x50) for better proportions
+[x] 230. Updated Form 16 PDF generation to use ASN branding with proper header format matching appointment letter design

@@ -22,41 +22,41 @@ export function addCompanyHeader(doc: jsPDF, config: PDFConfig = { title: "" }) 
   const pageWidth = doc.internal.pageSize.getWidth();
   
   doc.setFillColor(166, 199, 199);
-  doc.rect(0, 0, pageWidth, 40, "F");
+  doc.rect(0, 0, pageWidth, 35, "F");
   
   doc.setFillColor(207, 69, 32);
-  doc.rect(0, 40, pageWidth, 3, "F");
+  doc.rect(0, 35, pageWidth, 3, "F");
   
   try {
-    doc.addImage(ASN_LOGO_BASE64, "PNG", 10, 5, 50, 30);
+    doc.addImage(ASN_LOGO_BASE64, "PNG", 10, 5, 40, 25);
   } catch (e) {
-    doc.setFontSize(18);
+    doc.setFontSize(16);
     doc.setTextColor(207, 69, 32);
     doc.setFont("helvetica", "bold");
-    doc.text("ASN", 15, 22);
+    doc.text("ASN", 15, 20);
   }
   
   doc.setFontSize(14);
   doc.setTextColor(0, 51, 102);
   doc.setFont("helvetica", "bold");
-  doc.text(COMPANY_NAME, pageWidth - 15, 18, { align: "right" });
+  doc.text(COMPANY_NAME, pageWidth - 15, 15, { align: "right" });
   
   doc.setFontSize(9);
   doc.setTextColor(80, 80, 80);
   doc.setFont("helvetica", "normal");
-  doc.text(COMPANY_TAGLINE, pageWidth - 15, 28, { align: "right" });
+  doc.text(COMPANY_TAGLINE, pageWidth - 15, 25, { align: "right" });
   
   doc.setTextColor(0, 0, 0);
   
   if (config.title) {
     doc.setFontSize(16);
     doc.setFont("helvetica", "bold");
-    doc.text(config.title, pageWidth / 2, 55, { align: "center" });
+    doc.text(config.title, pageWidth / 2, 50, { align: "center" });
     
     if (config.subtitle) {
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
-      doc.text(config.subtitle, pageWidth / 2, 63, { align: "center" });
+      doc.text(config.subtitle, pageWidth / 2, 58, { align: "center" });
     }
   }
 }
@@ -68,8 +68,8 @@ export function addWatermark(doc: jsPDF) {
   doc.saveGraphicsState();
   
   try {
-    const logoWidth = 100;
-    const logoHeight = 60;
+    const logoWidth = 80;
+    const logoHeight = 50;
     const centerX = (pageWidth - logoWidth) / 2;
     const centerY = (pageHeight - logoHeight) / 2;
     
@@ -77,7 +77,7 @@ export function addWatermark(doc: jsPDF) {
     doc.addImage(ASN_LOGO_BASE64, "PNG", centerX, centerY, logoWidth, logoHeight);
   } catch (e) {
     doc.setTextColor(245, 245, 245);
-    doc.setFontSize(60);
+    doc.setFontSize(50);
     doc.setFont("helvetica", "bold");
     
     const text = "ASN";
@@ -86,7 +86,7 @@ export function addWatermark(doc: jsPDF) {
     const centerX = pageWidth / 2;
     const centerY = pageHeight / 2;
     
-    doc.text(text, centerX - textWidth / 2 + 40, centerY + 20, {
+    doc.text(text, centerX - textWidth / 2 + 30, centerY + 15, {
       angle: 45
     });
   }
