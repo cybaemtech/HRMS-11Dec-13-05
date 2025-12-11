@@ -239,6 +239,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // PATCH endpoint for partial updates (used for document uploads)
+  app.patch("/api/employees/:id", async (req, res, next) => {
+    try {
+      // Check authentication
+      if (!req.isAuthenticated()) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const id = parseInt(req.params.id);
+      const requestingUser = req.user;
+
+      // Authorization: Allow users to update their own profile, or admin/hr/manager can update any
+      const canUpdate = requestingUser.id === id || 
+                       ['admin', 'hr', 'manager', 'developer'].includes(requestingUser.role);
+      
+      if (!canUpdate) {
+        return res.status(403).json({ message: "Access denied. You can only update your own profile or must have admin/HR privileges." });
+      }
+
+      // Password updates should be handled separately
+      const { password, ...updateData } = req.body;
+      
+      // Log document uploads for debugging
+      if (updateData.documents && updateData.documents.length > 0) {
+        console.log(`[Employee PATCH] Saving ${updateData.documents.length} documents for employee ${id}`);
+      }
+      
+      const user = await storage.updateUser(id, updateData);
+      
+      if (!user) {
+        return res.status(404).json({ message: "Employee not found" });
+      }
+      
+      // Don't expose password
+      const { password: userPassword, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      next(error);
+    }
+  });
+
   app.delete("/api/employees/:id", async (req, res, next) => {
     try {
       const id = parseInt(req.params.id);

@@ -198,3 +198,5 @@
 [x] 198. Added download button in view modal for easy document downloading
 [x] 199. December 11, 2025: Installed cross-env package and restarted workflow - application running on port 5000
 [x] 200. CURRENT SESSION COMPLETE: All dependencies installed, workflow running successfully on port 5000
+[x] 201. Added PATCH endpoint for /api/employees/:id to properly handle document uploads via PATCH method
+[x] 202. Documents now save to existing JSON file and persist after refresh through proper backend storage
