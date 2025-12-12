@@ -3,23 +3,88 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+<<<<<<< HEAD
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { FileText, Download, Search, Calendar, IndianRupee, CheckCircle, Clock, AlertCircle, Loader2 } from "lucide-react";
+=======
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { FileText, Download, Search, Calendar, IndianRupee, CheckCircle, Clock, AlertCircle, Loader2, Plus, FilePlus } from "lucide-react";
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+<<<<<<< HEAD
+=======
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION } from "@/lib/pdf-utils";
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
 export default function Form16TdsPage() {
   const [selectedYear, setSelectedYear] = useState("2023-24");
   const [searchQuery, setSearchQuery] = useState("");
   const [generatingAll, setGeneratingAll] = useState(false);
   const [generatingIndex, setGeneratingIndex] = useState<number | null>(null);
+<<<<<<< HEAD
   const { toast } = useToast();
 
   const tdsStats = [
     { title: "Total TDS Deducted", value: "₹45,67,000", status: "success", icon: <IndianRupee className="h-5 w-5" /> },
+=======
+  const [showBasicForm16Dialog, setShowBasicForm16Dialog] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const [basicForm16Data, setBasicForm16Data] = useState({
+    employeeName: "",
+    pan: "",
+    address: "",
+    assessmentYear: "2024-25",
+    employerName: "HRMS Connect Pvt. Ltd.",
+    employerTan: "MUMH12345F",
+    grossSalary: "",
+    basicSalary: "",
+    hra: "",
+    otherAllowances: "",
+    standardDeduction: "50000",
+    section80C: "",
+    section80D: "",
+    otherDeductions: "",
+    tdsDeducted: "",
+  });
+
+  const resetBasicForm16 = () => {
+    setBasicForm16Data({
+      employeeName: "",
+      pan: "",
+      address: "",
+      assessmentYear: "2024-25",
+      employerName: "HRMS Connect Pvt. Ltd.",
+      employerTan: "MUMH12345F",
+      grossSalary: "",
+      basicSalary: "",
+      hra: "",
+      otherAllowances: "",
+      standardDeduction: "50000",
+      section80C: "",
+      section80D: "",
+      otherDeductions: "",
+      tdsDeducted: "",
+    });
+  };
+
+  const tdsStats = [
+    { title: "Total TDS Deducted", value: "Rs.45,67,000", status: "success", icon: <IndianRupee className="h-5 w-5" /> },
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     { title: "Form 16 Generated", value: "142", status: "success", icon: <FileText className="h-5 w-5" /> },
     { title: "Pending Generation", value: "14", status: "warning", icon: <Clock className="h-5 w-5" /> },
     { title: "Filed with Dept", value: "128", status: "success", icon: <CheckCircle className="h-5 w-5" /> },
@@ -64,6 +129,7 @@ export default function Form16TdsPage() {
       year: 'numeric' 
     });
     
+<<<<<<< HEAD
     doc.setFillColor(0, 128, 128);
     doc.rect(0, 0, 210, 30, 'F');
     
@@ -93,11 +159,50 @@ export default function Form16TdsPage() {
         ['Name of the Deductor (Employer)', 'HRMS Connect Pvt. Ltd.'],
         ['TAN of the Deductor', 'MUMH12345F'],
         ['Address of the Deductor', '123 Business Park, Mumbai, Maharashtra 400001'],
+=======
+    addFooter(doc);
+    
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("FORM NO. 16", 105, 20, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text("[See rule 31(1)(a)]", 105, 27, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 35, { align: 'center' });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 42, { align: 'center' });
+    
+    const refNumber = generateReferenceNumber("F16");
+    doc.setFontSize(9);
+    doc.text(`Ref No: ${refNumber}`, 14, 50);
+    doc.text(`Generated on: ${currentDate}`, 196, 50, { align: 'right' });
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part A - Details of Employer and Employee", 14, 60);
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.5);
+    doc.line(14, 63, 196, 63);
+    
+    autoTable(doc, {
+      startY: 67,
+      head: [],
+      body: [
+        ['Name of the Deductor (Employer)', COMPANY_NAME],
+        ['TAN of the Deductor', 'PNEC12345F'],
+        ['Address of the Deductor', COMPANY_ADDRESS],
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
         ['Name of the Employee', employee.employee],
         ['PAN of the Employee', employee.pan],
         ['Assessment Year', selectedYear === '2023-24' ? '2024-25' : selectedYear === '2022-23' ? '2023-24' : '2022-23'],
       ],
       theme: 'grid',
+<<<<<<< HEAD
       styles: { fontSize: 10 },
       columnStyles: {
         0: { fontStyle: 'bold', cellWidth: 70 },
@@ -110,6 +215,22 @@ export default function Form16TdsPage() {
     doc.setFontSize(12);
     doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 15);
     doc.line(14, partAEndY + 18, 196, partAEndY + 18);
+=======
+      styles: { fontSize: 9 },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 70 },
+        1: { cellWidth: 110 },
+      },
+    });
+    
+    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 120;
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
+    doc.setDrawColor(0, 0, 0);
+    doc.line(14, partAEndY + 15, 196, partAEndY + 15);
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     
     const basicSalary = Math.round(employee.totalIncome * 0.5);
     const hra = Math.round(employee.totalIncome * 0.2);
@@ -117,6 +238,7 @@ export default function Form16TdsPage() {
     const bonus = Math.round(employee.totalIncome * 0.1);
     
     autoTable(doc, {
+<<<<<<< HEAD
       startY: partAEndY + 22,
       head: [['Particulars', 'Amount (Rs.)']],
       body: [
@@ -145,6 +267,133 @@ export default function Form16TdsPage() {
     doc.save(`Form16_${employee.employee.replace(/\s+/g, '_')}_${selectedYear}.pdf`);
   };
 
+=======
+      startY: partAEndY + 19,
+      head: [['Particulars', 'Amount (Rs.)']],
+      body: [
+        ['1. Gross Salary', `Rs.${employee.totalIncome.toLocaleString()}`],
+        ['   a) Basic Salary', `Rs.${basicSalary.toLocaleString()}`],
+        ['   b) House Rent Allowance', `Rs.${hra.toLocaleString()}`],
+        ['   c) Other Allowances', `Rs.${allowances.toLocaleString()}`],
+        ['   d) Bonus/Incentive', `Rs.${bonus.toLocaleString()}`],
+        ['2. Less: Standard Deduction u/s 16(ia)', 'Rs.50,000'],
+        ['3. Net Taxable Income', `Rs.${(employee.totalIncome - 50000).toLocaleString()}`],
+        ['4. Tax Payable', `Rs.${employee.tdsDeducted.toLocaleString()}`],
+        ['5. Less: Rebate u/s 87A', 'Rs.0'],
+        ['6. Tax Deducted at Source', `Rs.${employee.tdsDeducted.toLocaleString()}`],
+      ],
+      theme: 'striped',
+      headStyles: { fillColor: [80, 80, 80] },
+      styles: { fontSize: 9 },
+    });
+    
+    doc.save(`Form16_${employee.employee.replace(/\s+/g, '_')}_${selectedYear}.pdf`);
+  };
+
+  const generateBasicForm16PDF = () => {
+    const doc = new jsPDF();
+    const currentDate = new Date().toLocaleDateString('en-IN', { 
+      day: '2-digit', 
+      month: 'long', 
+      year: 'numeric' 
+    });
+
+    const grossSalary = parseInt(basicForm16Data.grossSalary) || 0;
+    const basicSalary = parseInt(basicForm16Data.basicSalary) || 0;
+    const hra = parseInt(basicForm16Data.hra) || 0;
+    const otherAllowances = parseInt(basicForm16Data.otherAllowances) || 0;
+    const standardDeduction = parseInt(basicForm16Data.standardDeduction) || 50000;
+    const section80C = parseInt(basicForm16Data.section80C) || 0;
+    const section80D = parseInt(basicForm16Data.section80D) || 0;
+    const otherDeductions = parseInt(basicForm16Data.otherDeductions) || 0;
+    const tdsDeducted = parseInt(basicForm16Data.tdsDeducted) || 0;
+
+    const totalDeductions = standardDeduction + section80C + section80D + otherDeductions;
+    const taxableIncome = Math.max(0, grossSalary - totalDeductions);
+    
+    addFooter(doc);
+    
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("FORM NO. 16", 105, 20, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text("[See rule 31(1)(a)]", 105, 27, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 35, { align: 'center' });
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text(`for Tax Deducted at Source on Salary - AY ${basicForm16Data.assessmentYear}`, 105, 42, { align: 'center' });
+    
+    const refNumber = generateReferenceNumber("F16");
+    doc.setFontSize(9);
+    doc.text(`Ref No: ${refNumber}`, 14, 50);
+    doc.text(`Generated on: ${currentDate}`, 196, 50, { align: 'right' });
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part A - Details of Employer and Employee", 14, 60);
+    doc.setDrawColor(0, 0, 0);
+    doc.setLineWidth(0.5);
+    doc.line(14, 63, 196, 63);
+    
+    autoTable(doc, {
+      startY: 67,
+      head: [],
+      body: [
+        ['Name of the Deductor (Employer)', basicForm16Data.employerName || COMPANY_NAME],
+        ['TAN of the Deductor', basicForm16Data.employerTan || 'PNEC12345F'],
+        ['Address of the Deductor', COMPANY_ADDRESS],
+        ['Name of the Employee', basicForm16Data.employeeName],
+        ['PAN of the Employee', basicForm16Data.pan],
+        ['Address of the Employee', basicForm16Data.address || 'N/A'],
+        ['Assessment Year', basicForm16Data.assessmentYear],
+      ],
+      theme: 'grid',
+      styles: { fontSize: 9 },
+      columnStyles: {
+        0: { fontStyle: 'bold', cellWidth: 70 },
+        1: { cellWidth: 110 },
+      },
+    });
+    
+    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 120;
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
+    doc.setDrawColor(0, 0, 0);
+    doc.line(14, partAEndY + 15, 196, partAEndY + 15);
+    
+    autoTable(doc, {
+      startY: partAEndY + 19,
+      head: [['Particulars', 'Amount (Rs.)']],
+      body: [
+        ['1. Gross Salary', `Rs.${grossSalary.toLocaleString()}`],
+        ['   a) Basic Salary', `Rs.${basicSalary.toLocaleString()}`],
+        ['   b) House Rent Allowance', `Rs.${hra.toLocaleString()}`],
+        ['   c) Other Allowances', `Rs.${otherAllowances.toLocaleString()}`],
+        ['2. Less: Standard Deduction u/s 16(ia)', `Rs.${standardDeduction.toLocaleString()}`],
+        ['3. Less: Deductions under Chapter VI-A', ''],
+        ['   a) Section 80C', `Rs.${section80C.toLocaleString()}`],
+        ['   b) Section 80D', `Rs.${section80D.toLocaleString()}`],
+        ['   c) Other Deductions', `Rs.${otherDeductions.toLocaleString()}`],
+        ['4. Total Deductions', `Rs.${totalDeductions.toLocaleString()}`],
+        ['5. Net Taxable Income', `Rs.${taxableIncome.toLocaleString()}`],
+        ['6. Tax Deducted at Source', `Rs.${tdsDeducted.toLocaleString()}`],
+      ],
+      theme: 'striped',
+      headStyles: { fillColor: [80, 80, 80] },
+      styles: { fontSize: 9 },
+    });
+    
+    doc.save(`Form16_${basicForm16Data.employeeName.replace(/\s+/g, '_')}_${basicForm16Data.assessmentYear}.pdf`);
+  };
+
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   const handleGenerateForm16 = async (index: number) => {
     setGeneratingIndex(index);
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -200,6 +449,55 @@ export default function Form16TdsPage() {
     setGeneratingAll(false);
   };
 
+<<<<<<< HEAD
+=======
+  const handleGenerateBasicForm16 = async () => {
+    const grossSalaryValue = parseInt(basicForm16Data.grossSalary) || 0;
+    const tdsValue = parseInt(basicForm16Data.tdsDeducted) || 0;
+    
+    if (!basicForm16Data.employeeName.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter employee name.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (!basicForm16Data.pan.trim() || basicForm16Data.pan.trim().length !== 10) {
+      toast({
+        title: "Invalid PAN",
+        description: "Please enter a valid 10-character PAN number.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (grossSalaryValue <= 0) {
+      toast({
+        title: "Invalid Gross Salary",
+        description: "Please enter a valid gross salary amount.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    generateBasicForm16PDF();
+
+    toast({
+      title: "Form 16 Generated",
+      description: `Basic Form 16 for ${basicForm16Data.employeeName} has been generated and downloaded.`,
+    });
+
+    setIsSubmitting(false);
+    setShowBasicForm16Dialog(false);
+    resetBasicForm16();
+  };
+
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -212,7 +510,11 @@ export default function Form16TdsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Form 16 & TDS Management</h1>
             <p className="text-slate-500 mt-1">Manage TDS deductions and Form 16 generation</p>
           </div>
+<<<<<<< HEAD
           <div className="flex gap-2">
+=======
+          <div className="flex flex-wrap gap-2">
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Select value={selectedYear} onValueChange={setSelectedYear}>
               <SelectTrigger className="w-32" data-testid="select-year">
                 <Calendar className="h-4 w-4 mr-2" />
@@ -226,6 +528,18 @@ export default function Form16TdsPage() {
               </SelectContent>
             </Select>
             <Button 
+<<<<<<< HEAD
+=======
+              variant="outline"
+              className="gap-2" 
+              onClick={() => { resetBasicForm16(); setShowBasicForm16Dialog(true); }}
+              data-testid="button-basic-form16"
+            >
+              <FilePlus className="h-4 w-4" />
+              Basic Form 16
+            </Button>
+            <Button 
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               className="gap-2" 
               onClick={handleGenerateAllForm16}
               disabled={generatingAll}
@@ -313,8 +627,13 @@ export default function Form16TdsPage() {
                       <tr key={row.id} className="border-b hover:bg-slate-50" data-testid={`row-tds-${index}`}>
                         <td className="py-3 px-4 font-medium">{row.employee}</td>
                         <td className="py-3 px-4 font-mono text-sm">{row.pan}</td>
+<<<<<<< HEAD
                         <td className="py-3 px-4">₹{row.totalIncome.toLocaleString()}</td>
                         <td className="py-3 px-4">₹{row.tdsDeducted.toLocaleString()}</td>
+=======
+                        <td className="py-3 px-4">Rs.{row.totalIncome.toLocaleString()}</td>
+                        <td className="py-3 px-4">Rs.{row.tdsDeducted.toLocaleString()}</td>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                         <td className="py-3 px-4">
                           <Badge className={getStatusColor(row.form16)}>{row.form16}</Badge>
                         </td>
@@ -363,6 +682,233 @@ export default function Form16TdsPage() {
           </CardContent>
         </Card>
       </div>
+<<<<<<< HEAD
+=======
+
+      <Dialog open={showBasicForm16Dialog} onOpenChange={setShowBasicForm16Dialog}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FilePlus className="h-5 w-5 text-teal-600" />
+              Create Basic Form 16
+            </DialogTitle>
+            <DialogDescription>Fill in the details to generate a custom Form 16 certificate</DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-700 border-b pb-2">Employee Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="employeeName">Employee Name *</Label>
+                  <Input
+                    id="employeeName"
+                    placeholder="Enter full name"
+                    value={basicForm16Data.employeeName}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, employeeName: e.target.value }))}
+                    data-testid="input-employee-name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pan">PAN Number *</Label>
+                  <Input
+                    id="pan"
+                    placeholder="e.g., ABCDE1234F"
+                    value={basicForm16Data.pan}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, pan: e.target.value.toUpperCase() }))}
+                    maxLength={10}
+                    data-testid="input-pan"
+                  />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <Label htmlFor="address">Address</Label>
+                  <Input
+                    id="address"
+                    placeholder="Enter employee address"
+                    value={basicForm16Data.address}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, address: e.target.value }))}
+                    data-testid="input-address"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="assessmentYear">Assessment Year</Label>
+                  <Select value={basicForm16Data.assessmentYear} onValueChange={(value) => setBasicForm16Data(prev => ({ ...prev, assessmentYear: value }))}>
+                    <SelectTrigger data-testid="select-assessment-year">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="2025-26">2025-26</SelectItem>
+                      <SelectItem value="2024-25">2024-25</SelectItem>
+                      <SelectItem value="2023-24">2023-24</SelectItem>
+                      <SelectItem value="2022-23">2022-23</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-700 border-b pb-2">Employer Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="employerName">Employer Name</Label>
+                  <Input
+                    id="employerName"
+                    value={basicForm16Data.employerName}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, employerName: e.target.value }))}
+                    data-testid="input-employer-name"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="employerTan">Employer TAN</Label>
+                  <Input
+                    id="employerTan"
+                    value={basicForm16Data.employerTan}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, employerTan: e.target.value.toUpperCase() }))}
+                    data-testid="input-employer-tan"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-700 border-b pb-2">Salary Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="grossSalary">Gross Salary (Rs.) *</Label>
+                  <Input
+                    id="grossSalary"
+                    type="number"
+                    placeholder="e.g., 1200000"
+                    value={basicForm16Data.grossSalary}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, grossSalary: e.target.value }))}
+                    data-testid="input-gross-salary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="basicSalary">Basic Salary (Rs.)</Label>
+                  <Input
+                    id="basicSalary"
+                    type="number"
+                    placeholder="e.g., 600000"
+                    value={basicForm16Data.basicSalary}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, basicSalary: e.target.value }))}
+                    data-testid="input-basic-salary"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="hra">HRA (Rs.)</Label>
+                  <Input
+                    id="hra"
+                    type="number"
+                    placeholder="e.g., 240000"
+                    value={basicForm16Data.hra}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, hra: e.target.value }))}
+                    data-testid="input-hra"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="otherAllowances">Other Allowances (Rs.)</Label>
+                  <Input
+                    id="otherAllowances"
+                    type="number"
+                    placeholder="e.g., 360000"
+                    value={basicForm16Data.otherAllowances}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, otherAllowances: e.target.value }))}
+                    data-testid="input-other-allowances"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-700 border-b pb-2">Deductions</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="standardDeduction">Standard Deduction (Rs.)</Label>
+                  <Input
+                    id="standardDeduction"
+                    type="number"
+                    value={basicForm16Data.standardDeduction}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, standardDeduction: e.target.value }))}
+                    data-testid="input-standard-deduction"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="section80C">Section 80C (Rs.)</Label>
+                  <Input
+                    id="section80C"
+                    type="number"
+                    placeholder="e.g., 150000"
+                    value={basicForm16Data.section80C}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, section80C: e.target.value }))}
+                    data-testid="input-section-80c"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="section80D">Section 80D (Rs.)</Label>
+                  <Input
+                    id="section80D"
+                    type="number"
+                    placeholder="e.g., 25000"
+                    value={basicForm16Data.section80D}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, section80D: e.target.value }))}
+                    data-testid="input-section-80d"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="otherDeductions">Other Deductions (Rs.)</Label>
+                  <Input
+                    id="otherDeductions"
+                    type="number"
+                    placeholder="e.g., 50000"
+                    value={basicForm16Data.otherDeductions}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, otherDeductions: e.target.value }))}
+                    data-testid="input-other-deductions"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-700 border-b pb-2">Tax Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="tdsDeducted">TDS Deducted (Rs.) *</Label>
+                  <Input
+                    id="tdsDeducted"
+                    type="number"
+                    placeholder="e.g., 120000"
+                    value={basicForm16Data.tdsDeducted}
+                    onChange={(e) => setBasicForm16Data(prev => ({ ...prev, tdsDeducted: e.target.value }))}
+                    data-testid="input-tds-deducted"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowBasicForm16Dialog(false)} data-testid="button-cancel-basic-form16">
+              Cancel
+            </Button>
+            <Button onClick={handleGenerateBasicForm16} disabled={isSubmitting} data-testid="button-generate-basic-form16">
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Download className="h-4 w-4 mr-2" />
+                  Generate & Download
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

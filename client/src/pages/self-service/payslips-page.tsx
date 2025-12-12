@@ -3,17 +3,57 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+<<<<<<< HEAD
 import { FileText, Download, Eye, IndianRupee, Calendar, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function MyPayslipsPage() {
   const [selectedYear, setSelectedYear] = useState("2024");
+=======
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { FileText, Download, Eye, IndianRupee, Calendar, TrendingUp } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import jsPDF from "jspdf";
+
+interface Payslip {
+  id: number;
+  month: string;
+  grossPay: number;
+  deductions: number;
+  netPay: number;
+  status: string;
+  basic: number;
+  hra: number;
+  allowances: number;
+  pf: number;
+  tax: number;
+  other: number;
+}
+
+export default function MyPayslipsPage() {
+  const [selectedYear, setSelectedYear] = useState("2024");
+  const [showViewDialog, setShowViewDialog] = useState(false);
+  const [selectedPayslip, setSelectedPayslip] = useState<Payslip | null>(null);
+  const { toast } = useToast();
+
+  const payslips: Payslip[] = [
+    { id: 1, month: "January 2024", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
+    { id: 2, month: "December 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
+    { id: 3, month: "November 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
+    { id: 4, month: "October 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
+    { id: 5, month: "September 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
+    { id: 6, month: "August 2023", grossPay: 95000, deductions: 14000, netPay: 81000, status: "Paid", basic: 47500, hra: 23750, allowances: 23750, pf: 5700, tax: 7500, other: 800 },
+  ];
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const payslipStats = [
     { title: "Current Month", value: "₹85,000", icon: <IndianRupee className="h-5 w-5" /> },
     { title: "YTD Earnings", value: "₹1,70,000", icon: <TrendingUp className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
     { title: "Tax Deducted", value: "₹15,000", icon: <IndianRupee className="h-5 w-5" />, color: "bg-red-50 text-red-600" },
+<<<<<<< HEAD
     { title: "Total Payslips", value: "12", icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
   ];
 
@@ -25,6 +65,65 @@ export default function MyPayslipsPage() {
     { month: "September 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
     { month: "August 2023", grossPay: 95000, deductions: 14000, netPay: 81000, status: "Paid" },
   ];
+=======
+    { title: "Total Payslips", value: payslips.length.toString(), icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
+  ];
+
+  const filteredPayslips = payslips.filter(p => p.month.includes(selectedYear));
+
+  const generatePDF = (payslip: Payslip) => {
+    const doc = new jsPDF();
+    
+    doc.setFontSize(20);
+    doc.text("PAYSLIP", 105, 20, { align: "center" });
+    
+    doc.setFontSize(14);
+    doc.text("HRConnect Pvt. Ltd.", 105, 35, { align: "center" });
+    
+    doc.setFontSize(12);
+    doc.text(`Pay Period: ${payslip.month}`, 20, 55);
+    
+    doc.setFontSize(11);
+    doc.text("Employee Details:", 20, 70);
+    doc.text("Employee Name: John Doe", 20, 80);
+    doc.text("Employee ID: EMP001", 20, 90);
+    doc.text("Department: Engineering", 20, 100);
+    
+    doc.text("Earnings:", 20, 120);
+    doc.text(`Basic Salary: Rs. ${payslip.basic.toLocaleString()}`, 30, 130);
+    doc.text(`HRA: Rs. ${payslip.hra.toLocaleString()}`, 30, 140);
+    doc.text(`Other Allowances: Rs. ${payslip.allowances.toLocaleString()}`, 30, 150);
+    doc.text(`Gross Earnings: Rs. ${payslip.grossPay.toLocaleString()}`, 30, 165);
+    
+    doc.text("Deductions:", 110, 120);
+    doc.text(`Provident Fund: Rs. ${payslip.pf.toLocaleString()}`, 120, 130);
+    doc.text(`Income Tax: Rs. ${payslip.tax.toLocaleString()}`, 120, 140);
+    doc.text(`Other Deductions: Rs. ${payslip.other.toLocaleString()}`, 120, 150);
+    doc.text(`Total Deductions: Rs. ${payslip.deductions.toLocaleString()}`, 120, 165);
+    
+    doc.setFontSize(14);
+    doc.text(`Net Pay: Rs. ${payslip.netPay.toLocaleString()}`, 20, 190);
+    
+    doc.setFontSize(10);
+    doc.text("This is a computer-generated document and does not require a signature.", 105, 270, { align: "center" });
+    
+    return doc;
+  };
+
+  const handleView = (payslip: Payslip) => {
+    setSelectedPayslip(payslip);
+    setShowViewDialog(true);
+  };
+
+  const handleDownload = (payslip: Payslip) => {
+    const doc = generatePDF(payslip);
+    doc.save(`payslip_${payslip.month.replace(/\s+/g, '_')}.pdf`);
+    toast({
+      title: "Downloaded",
+      description: `Payslip for ${payslip.month} downloaded successfully.`
+    });
+  };
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   return (
     <AppLayout>
@@ -98,8 +197,13 @@ export default function MyPayslipsPage() {
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   {payslips.map((payslip, index) => (
                     <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-payslip-${index}`}>
+=======
+                  {filteredPayslips.map((payslip, index) => (
+                    <tr key={payslip.id} className="border-b hover:bg-slate-50" data-testid={`row-payslip-${index}`}>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{payslip.month}</td>
                       <td className="py-3 px-4">₹{payslip.grossPay.toLocaleString()}</td>
                       <td className="py-3 px-4 text-red-600">-₹{payslip.deductions.toLocaleString()}</td>
@@ -109,10 +213,17 @@ export default function MyPayslipsPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
+<<<<<<< HEAD
                           <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
                             <Eye className="h-4 w-4" />
                           </Button>
                           <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
+=======
+                          <Button size="icon" variant="ghost" onClick={() => handleView(payslip)} data-testid={`button-view-${index}`}>
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <Button size="icon" variant="ghost" onClick={() => handleDownload(payslip)} data-testid={`button-download-${index}`}>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                             <Download className="h-4 w-4" />
                           </Button>
                         </div>
@@ -125,6 +236,87 @@ export default function MyPayslipsPage() {
           </CardContent>
         </Card>
       </div>
+<<<<<<< HEAD
+=======
+
+      <Dialog open={showViewDialog} onOpenChange={setShowViewDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Payslip - {selectedPayslip?.month}</DialogTitle>
+          </DialogHeader>
+          {selectedPayslip && (
+            <div className="space-y-6 py-4">
+              <div className="text-center border-b pb-4">
+                <h2 className="text-xl font-bold">HRConnect Pvt. Ltd.</h2>
+                <p className="text-slate-500">Pay Period: {selectedPayslip.month}</p>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-green-600">Earnings</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Basic Salary</span>
+                      <span>₹{selectedPayslip.basic.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">HRA</span>
+                      <span>₹{selectedPayslip.hra.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Other Allowances</span>
+                      <span>₹{selectedPayslip.allowances.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between font-semibold border-t pt-2">
+                      <span>Gross Earnings</span>
+                      <span className="text-green-600">₹{selectedPayslip.grossPay.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-red-600">Deductions</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Provident Fund</span>
+                      <span>₹{selectedPayslip.pf.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Income Tax</span>
+                      <span>₹{selectedPayslip.tax.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Other Deductions</span>
+                      <span>₹{selectedPayslip.other.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between font-semibold border-t pt-2">
+                      <span>Total Deductions</span>
+                      <span className="text-red-600">₹{selectedPayslip.deductions.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-slate-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-semibold">Net Pay</span>
+                  <span className="text-2xl font-bold text-green-600">₹{selectedPayslip.netPay.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowViewDialog(false)}>Close</Button>
+            {selectedPayslip && (
+              <Button onClick={() => handleDownload(selectedPayslip)}>
+                <Download className="h-4 w-4 mr-2" />
+                Download PDF
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

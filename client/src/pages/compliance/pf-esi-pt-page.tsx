@@ -12,6 +12,10 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+<<<<<<< HEAD
+=======
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS } from "@/lib/pdf-utils";
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
 export default function PfEsiPtPage() {
   const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
@@ -87,6 +91,7 @@ export default function PfEsiPtPage() {
 
   const generateReport = () => {
     const doc = new jsPDF();
+<<<<<<< HEAD
     const currentDate = new Date().toLocaleDateString('en-IN', { 
       day: '2-digit', 
       month: 'long', 
@@ -145,10 +150,72 @@ export default function PfEsiPtPage() {
       ]),
       theme: 'striped',
       headStyles: { fillColor: [0, 128, 128] },
+=======
+    
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "PF / ESI / PT COMPLIANCE REPORT", subtitle: "Statutory Contributions Summary" });
+    addFooter(doc);
+    
+    const refNumber = generateReferenceNumber("PEP");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary", 15, 80);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text(`Total PF Contribution: Rs. 12,45,000`, 25, 88);
+    doc.text(`Total ESI Contribution: Rs. 3,45,000`, 25, 96);
+    doc.text(`Total PT Collected: Rs. 89,500`, 25, 104);
+    doc.text(`Eligible Employees: 156`, 25, 112);
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("Provident Fund Details", 15, 125);
+    
+    autoTable(doc, {
+      startY: 130,
+      head: [['Employee', 'Basic Salary', 'Employee (12%)', 'Employer (12%)', 'Total']],
+      body: pfData.map(row => [
+        row.employee,
+        `Rs. ${row.basicSalary.toLocaleString()}`,
+        `Rs. ${row.employeeContrib.toLocaleString()}`,
+        `Rs. ${row.employerContrib.toLocaleString()}`,
+        `Rs. ${row.total.toLocaleString()}`
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [0, 98, 179] },
+      styles: { fontSize: 8 },
+    });
+    
+    const pfEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 180;
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text("ESI Details", 15, pfEndY + 12);
+    
+    autoTable(doc, {
+      startY: pfEndY + 16,
+      head: [['Employee', 'Gross Salary', 'Employee (0.75%)', 'Employer (3.25%)', 'Total']],
+      body: esiData.map(row => [
+        row.employee,
+        `Rs. ${row.grossSalary.toLocaleString()}`,
+        `Rs. ${row.employeeContrib.toLocaleString()}`,
+        `Rs. ${row.employerContrib.toLocaleString()}`,
+        `Rs. ${row.total.toLocaleString()}`
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [0, 98, 179] },
+      styles: { fontSize: 8 },
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     });
     
     doc.addPage();
     
+<<<<<<< HEAD
     doc.setFontSize(14);
     doc.text("Professional Tax Details", 14, 20);
     
@@ -165,6 +232,35 @@ export default function PfEsiPtPage() {
       headStyles: { fillColor: [0, 128, 128] },
     });
     
+=======
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "PF / ESI / PT COMPLIANCE REPORT", subtitle: "Professional Tax Details" });
+    addFooter(doc);
+    
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(0, 0, 0);
+    doc.text("Professional Tax Details", 15, 68);
+    
+    autoTable(doc, {
+      startY: 73,
+      head: [['Employee', 'Gross Salary', 'PT Amount', 'State']],
+      body: ptData.map(row => [
+        row.employee,
+        `Rs. ${row.grossSalary.toLocaleString()}`,
+        `Rs. ${row.ptAmount.toLocaleString()}`,
+        row.state
+      ]),
+      theme: 'striped',
+      headStyles: { fillColor: [0, 98, 179] },
+      styles: { fontSize: 9 },
+    });
+    
+    const ptEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 150;
+    
+    addHRSignature(doc, ptEndY + 25);
+    
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     doc.save('pf-esi-pt-report.pdf');
     
     toast({

@@ -2,6 +2,7 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+<<<<<<< HEAD
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Users, Download, TrendingUp, TrendingDown, Building2, UserPlus, UserMinus } from "lucide-react";
 import { motion } from "framer-motion";
@@ -9,6 +10,22 @@ import { useState } from "react";
 
 export default function HeadcountReportPage() {
   const [selectedPeriod, setSelectedPeriod] = useState("Q4 2023");
+=======
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Users, Download, TrendingUp, TrendingDown, Building2, UserPlus, UserMinus, Search, FileSpreadsheet } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import jsPDF from "jspdf";
+import * as XLSX from "xlsx";
+import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber } from "@/lib/pdf-utils";
+
+export default function HeadcountReportPage() {
+  const [selectedPeriod, setSelectedPeriod] = useState("Q4 2023");
+  const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const headcountStats = [
     { title: "Total Headcount", value: "156", change: "+12", icon: <Users className="h-5 w-5" /> },
@@ -26,6 +43,88 @@ export default function HeadcountReportPage() {
     { department: "Operations", headcount: 24, newHires: 1, separations: 0, growth: 4.3 },
   ];
 
+<<<<<<< HEAD
+=======
+  const filteredData = departmentData.filter(dept =>
+    dept.department.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    
+    addWatermark(doc);
+    addCompanyHeader(doc, { title: "HEADCOUNT REPORT", subtitle: `Period: ${selectedPeriod}` });
+    addFooter(doc);
+    
+    const refNumber = generateReferenceNumber("HDC");
+    addReferenceNumber(doc, refNumber, 68);
+    addDocumentDate(doc, undefined, 68);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.setFont("helvetica", "bold");
+    doc.text("Summary:", 15, 80);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.text("Total Headcount: 156 employees", 25, 88);
+    doc.text("New Hires: 18", 25, 96);
+    doc.text("Separations: 6", 25, 104);
+    doc.text("Net Growth Rate: 8.3%", 25, 112);
+    
+    doc.setFont("helvetica", "bold");
+    doc.text("Department-wise Breakdown:", 15, 125);
+    
+    let yPos = 135;
+    doc.setFontSize(9);
+    doc.text("Department", 15, yPos);
+    doc.text("Headcount", 65, yPos);
+    doc.text("New Hires", 100, yPos);
+    doc.text("Separations", 135, yPos);
+    doc.text("Growth %", 170, yPos);
+    
+    doc.setFont("helvetica", "normal");
+    yPos += 8;
+    filteredData.forEach((dept) => {
+      doc.text(dept.department, 15, yPos);
+      doc.text(dept.headcount.toString(), 65, yPos);
+      doc.text(dept.newHires.toString(), 100, yPos);
+      doc.text(dept.separations.toString(), 135, yPos);
+      doc.text(`${dept.growth}%`, 170, yPos);
+      yPos += 7;
+    });
+    
+    addHRSignature(doc, yPos + 25);
+    
+    doc.save(`headcount_report_${selectedPeriod.replace(/\s+/g, '_')}.pdf`);
+    
+    toast({
+      title: "PDF Exported",
+      description: `Headcount report for ${selectedPeriod} downloaded successfully.`
+    });
+  };
+
+  const handleExportExcel = () => {
+    const exportData = filteredData.map(dept => ({
+      "Department": dept.department,
+      "Headcount": dept.headcount,
+      "New Hires": dept.newHires,
+      "Separations": dept.separations,
+      "Growth (%)": dept.growth
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(exportData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Headcount Report");
+    XLSX.writeFile(wb, `headcount_report_${selectedPeriod.replace(/\s+/g, '_')}.xlsx`);
+
+    toast({
+      title: "Excel Exported",
+      description: `Headcount report exported to Excel successfully.`
+    });
+  };
+
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -38,7 +137,11 @@ export default function HeadcountReportPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Headcount Report</h1>
             <p className="text-slate-500 mt-1">Employee headcount analysis by department</p>
           </div>
+<<<<<<< HEAD
           <div className="flex gap-2">
+=======
+          <div className="flex gap-2 flex-wrap">
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
               <SelectTrigger className="w-32" data-testid="select-period">
                 <SelectValue />
@@ -47,11 +150,25 @@ export default function HeadcountReportPage() {
                 <SelectItem value="Q4 2023">Q4 2023</SelectItem>
                 <SelectItem value="Q3 2023">Q3 2023</SelectItem>
                 <SelectItem value="Q2 2023">Q2 2023</SelectItem>
+<<<<<<< HEAD
               </SelectContent>
             </Select>
             <Button variant="outline" className="gap-2" data-testid="button-export">
               <Download className="h-4 w-4" />
               Export
+=======
+                <SelectItem value="Q1 2023">Q1 2023</SelectItem>
+                <SelectItem value="Q4 2022">Q4 2022</SelectItem>
+              </SelectContent>
+            </Select>
+            <Button variant="outline" className="gap-2" onClick={handleExportPDF} data-testid="button-export-pdf">
+              <Download className="h-4 w-4" />
+              PDF
+            </Button>
+            <Button variant="outline" className="gap-2" onClick={handleExportExcel} data-testid="button-export-excel">
+              <FileSpreadsheet className="h-4 w-4" />
+              Excel
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </Button>
           </div>
         </motion.div>
@@ -87,11 +204,33 @@ export default function HeadcountReportPage() {
 
         <Card>
           <CardHeader>
+<<<<<<< HEAD
             <CardTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5 text-teal-600" />
               Department Headcount - {selectedPeriod}
             </CardTitle>
             <CardDescription>Headcount breakdown by department</CardDescription>
+=======
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <CardTitle className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-teal-600" />
+                  Department Headcount - {selectedPeriod}
+                </CardTitle>
+                <CardDescription>Headcount breakdown by department</CardDescription>
+              </div>
+              <div className="relative w-full md:w-64">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <Input
+                  placeholder="Search department..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9"
+                  data-testid="input-search"
+                />
+              </div>
+            </div>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -106,7 +245,11 @@ export default function HeadcountReportPage() {
                   </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                   {departmentData.map((dept, index) => (
+=======
+                  {filteredData.map((dept, index) => (
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                     <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-dept-${index}`}>
                       <td className="py-3 px-4 font-medium">{dept.department}</td>
                       <td className="py-3 px-4">{dept.headcount}</td>

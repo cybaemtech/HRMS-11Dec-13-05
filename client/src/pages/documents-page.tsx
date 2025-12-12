@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+<<<<<<< HEAD
 import { Textarea } from "@/components/ui/textarea";
 import {
   Dialog,
@@ -334,6 +335,29 @@ export default function DocumentsPage() {
   const allEmployeesList = employees.filter(e => e.firstName && e.lastName);
   const selectedEmployee = allEmployeesList.find(e => e.id.toString() === form.watch("employeeId"));
 
+=======
+import { FileArchive, Upload, Search, Download, Eye, Folder, FileText, Image, File } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+export default function DocumentsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const documentCategories = [
+    { name: "ID Proofs", count: 45, icon: <FileText className="h-5 w-5" /> },
+    { name: "Certificates", count: 32, icon: <FileArchive className="h-5 w-5" /> },
+    { name: "Offer Letters", count: 28, icon: <File className="h-5 w-5" /> },
+    { name: "Photos", count: 56, icon: <Image className="h-5 w-5" /> },
+  ];
+
+  const recentDocuments = [
+    { name: "John_Doe_Aadhar.pdf", type: "ID Proof", employee: "John Doe", date: "2024-01-15", size: "2.4 MB" },
+    { name: "Jane_Smith_Certificate.pdf", type: "Certificate", employee: "Jane Smith", date: "2024-01-14", size: "1.8 MB" },
+    { name: "Mike_Johnson_Offer.pdf", type: "Offer Letter", employee: "Mike Johnson", date: "2024-01-13", size: "856 KB" },
+    { name: "Sarah_Wilson_Photo.jpg", type: "Photo", employee: "Sarah Wilson", date: "2024-01-12", size: "450 KB" },
+  ];
+
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -346,6 +370,7 @@ export default function DocumentsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Document Management</h1>
             <p className="text-slate-500 mt-1">Manage and organize employee documents</p>
           </div>
+<<<<<<< HEAD
           
           <Button 
             onClick={() => setIsDialogOpen(true)}
@@ -657,6 +682,12 @@ export default function DocumentsPage() {
               </Form>
             </DialogContent>
           </Dialog>
+=======
+          <Button className="gap-2" data-testid="button-upload-document">
+            <Upload className="h-4 w-4" />
+            Upload Document
+          </Button>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -667,6 +698,7 @@ export default function DocumentsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
+<<<<<<< HEAD
               <Card 
                 className={cn(
                   "cursor-pointer transition-all duration-200",
@@ -693,6 +725,17 @@ export default function DocumentsPage() {
                   {selectedCategory === category.name && (
                     <p className="text-xs text-teal-600 mt-1">Click to clear filter</p>
                   )}
+=======
+              <Card className="hover-elevate cursor-pointer" data-testid={`card-category-${category.name.toLowerCase().replace(' ', '-')}`}>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div className="p-3 rounded-lg bg-teal-50">
+                      <div className="text-teal-600">{category.icon}</div>
+                    </div>
+                    <Badge variant="secondary">{category.count} files</Badge>
+                  </div>
+                  <h3 className="mt-4 font-semibold text-slate-900">{category.name}</h3>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                 </CardContent>
               </Card>
             </motion.div>
@@ -703,6 +746,7 @@ export default function DocumentsPage() {
           <CardHeader>
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
+<<<<<<< HEAD
                 <CardTitle>
                   {selectedCategory ? `${selectedCategory}` : "Recent Documents"}
                 </CardTitle>
@@ -711,6 +755,10 @@ export default function DocumentsPage() {
                     ? `Showing ${filteredDocuments.length} documents in ${selectedCategory}`
                     : `${allDocuments.length} documents uploaded across all employees`}
                 </CardDescription>
+=======
+                <CardTitle>Recent Documents</CardTitle>
+                <CardDescription>Latest uploaded documents across all employees</CardDescription>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               </div>
               <div className="relative w-full md:w-64">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -726,6 +774,7 @@ export default function DocumentsPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
+<<<<<<< HEAD
               {filteredDocuments.length === 0 ? (
                 <div className="text-center py-12 text-slate-500">
                   <FileText className="w-12 h-12 mx-auto mb-4 opacity-50" />
@@ -857,6 +906,40 @@ export default function DocumentsPage() {
             </div>
           </DialogContent>
         </Dialog>
+=======
+              {recentDocuments.map((doc, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="flex items-center justify-between p-4 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                  data-testid={`row-document-${index}`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-2 rounded-lg bg-white border">
+                      <FileText className="h-5 w-5 text-slate-600" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-slate-900">{doc.name}</p>
+                      <p className="text-sm text-slate-500">{doc.employee} • {doc.type} • {doc.size}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-slate-500">{doc.date}</span>
+                    <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
+                      <Download className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+>>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       </div>
     </AppLayout>
   );
