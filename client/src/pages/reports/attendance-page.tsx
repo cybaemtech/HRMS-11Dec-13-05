@@ -2,12 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ClipboardList, Download, Calendar, Clock, Users, TrendingUp, AlertTriangle } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-=======
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ClipboardList, Download, Calendar, Clock, Users, TrendingUp, AlertTriangle, Search, FileSpreadsheet } from "lucide-react";
@@ -17,16 +11,12 @@ import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import * as XLSX from "xlsx";
 import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber } from "@/lib/pdf-utils";
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
 export default function AttendanceReportPage() {
   const [selectedMonth, setSelectedMonth] = useState("January 2024");
   const [selectedDepartment, setSelectedDepartment] = useState("all");
-<<<<<<< HEAD
-=======
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const reportStats = [
     { title: "Average Attendance", value: "94.5%", icon: <Users className="h-5 w-5" />, color: "bg-teal-50 text-teal-600" },
@@ -43,8 +33,6 @@ export default function AttendanceReportPage() {
     { name: "Finance", employees: 15, avgAttendance: 94.9, lateArrivals: 6, absences: 4 },
   ];
 
-<<<<<<< HEAD
-=======
   const filteredData = departmentData.filter(dept => {
     const matchesSearch = dept.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDepartment = selectedDepartment === "all" || dept.name.toLowerCase() === selectedDepartment;
@@ -127,7 +115,6 @@ export default function AttendanceReportPage() {
     });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -150,10 +137,7 @@ export default function AttendanceReportPage() {
                 <SelectItem value="January 2024">January 2024</SelectItem>
                 <SelectItem value="December 2023">December 2023</SelectItem>
                 <SelectItem value="November 2023">November 2023</SelectItem>
-<<<<<<< HEAD
-=======
                 <SelectItem value="October 2023">October 2023</SelectItem>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               </SelectContent>
             </Select>
             <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
@@ -165,13 +149,6 @@ export default function AttendanceReportPage() {
                 <SelectItem value="engineering">Engineering</SelectItem>
                 <SelectItem value="sales">Sales</SelectItem>
                 <SelectItem value="marketing">Marketing</SelectItem>
-<<<<<<< HEAD
-              </SelectContent>
-            </Select>
-            <Button variant="outline" className="gap-2" data-testid="button-export">
-              <Download className="h-4 w-4" />
-              Export
-=======
                 <SelectItem value="hr">HR</SelectItem>
                 <SelectItem value="finance">Finance</SelectItem>
               </SelectContent>
@@ -183,7 +160,6 @@ export default function AttendanceReportPage() {
             <Button variant="outline" className="gap-2" onClick={handleExportExcel} data-testid="button-export-excel">
               <FileSpreadsheet className="h-4 w-4" />
               Excel
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </Button>
           </div>
         </motion.div>
@@ -215,13 +191,6 @@ export default function AttendanceReportPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <ClipboardList className="h-5 w-5 text-teal-600" />
-              Department-wise Attendance Summary
-            </CardTitle>
-            <CardDescription>Attendance breakdown by department for {selectedMonth}</CardDescription>
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -241,7 +210,6 @@ export default function AttendanceReportPage() {
                 />
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -257,11 +225,7 @@ export default function AttendanceReportPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {departmentData.map((dept, index) => (
-=======
                   {filteredData.map((dept, index) => (
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                     <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-dept-${index}`}>
                       <td className="py-3 px-4 font-medium">{dept.name}</td>
                       <td className="py-3 px-4">{dept.employees}</td>

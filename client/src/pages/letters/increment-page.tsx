@@ -3,29 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { TrendingUp, Plus, Search, Download, Eye, IndianRupee, Percent } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function IncrementLettersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const letterStats = [
-    { title: "Total Increments", value: "45", icon: <TrendingUp className="h-5 w-5" /> },
-    { title: "Avg Increment", value: "12.5%", icon: <Percent className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Total Value", value: "₹18.5L", icon: <IndianRupee className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-    { title: "This Quarter", value: "28", icon: <TrendingUp className="h-5 w-5" />, color: "bg-purple-50 text-purple-600" },
-  ];
-
-  const letters = [
-    { employee: "John Doe", department: "Engineering", currentSalary: 1500000, newSalary: 1725000, increment: 15, effectiveDate: "Apr 1, 2024", status: "Generated" },
-    { employee: "Jane Smith", department: "Marketing", currentSalary: 1200000, newSalary: 1344000, increment: 12, effectiveDate: "Apr 1, 2024", status: "Generated" },
-    { employee: "Mike Johnson", department: "Sales", currentSalary: 1000000, newSalary: 1120000, increment: 12, effectiveDate: "Apr 1, 2024", status: "Pending" },
-    { employee: "Sarah Wilson", department: "HR", currentSalary: 900000, newSalary: 990000, increment: 10, effectiveDate: "Apr 1, 2024", status: "Generated" },
-    { employee: "Tom Brown", department: "Finance", currentSalary: 1100000, newSalary: 1232000, increment: 12, effectiveDate: "Apr 1, 2024", status: "Pending" },
-  ];
-=======
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -84,7 +61,6 @@ export default function IncrementLettersPage() {
     letter.employee.toLowerCase().includes(searchQuery.toLowerCase()) ||
     letter.department.toLowerCase().includes(searchQuery.toLowerCase())
   );
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -101,8 +77,6 @@ export default function IncrementLettersPage() {
     return `₹${amount.toLocaleString()}`;
   };
 
-<<<<<<< HEAD
-=======
   const generatePDF = (letter: IncrementLetter) => {
     const doc = new jsPDF();
     
@@ -194,7 +168,6 @@ Congratulations on your well-deserved increment!`;
     }
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -207,11 +180,7 @@ Congratulations on your well-deserved increment!`;
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Increment Letters</h1>
             <p className="text-slate-500 mt-1">Generate and manage salary increment letters</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-generate-letter">
-=======
           <Button className="gap-2" onClick={() => setShowGenerateDialog(true)} data-testid="button-generate-letter">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             Generate Letter
           </Button>
@@ -280,13 +249,8 @@ Congratulations on your well-deserved increment!`;
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {letters.map((letter, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
-=======
                   {filteredLetters.map((letter, index) => (
                     <tr key={letter.id} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{letter.employee}</td>
                       <td className="py-3 px-4 text-slate-600">{letter.department}</td>
                       <td className="py-3 px-4">{formatSalary(letter.currentSalary)}</td>
@@ -305,26 +269,15 @@ Congratulations on your well-deserved increment!`;
                         <div className="flex gap-2">
                           {letter.status === "Generated" ? (
                             <>
-<<<<<<< HEAD
-                              <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                              <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-=======
                               <Button size="icon" variant="ghost" onClick={() => handleView(letter)} data-testid={`button-view-${index}`}>
                                 <Eye className="h-4 w-4" />
                               </Button>
                               <Button size="icon" variant="ghost" onClick={() => handleDownload(letter)} data-testid={`button-download-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                                 <Download className="h-4 w-4" />
                               </Button>
                             </>
                           ) : (
-<<<<<<< HEAD
-                            <Button size="sm" data-testid={`button-generate-${index}`}>Generate</Button>
-=======
                             <Button size="sm" onClick={() => handleGenerate(letter.id)} data-testid={`button-generate-${index}`}>Generate</Button>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                           )}
                         </div>
                       </td>
@@ -336,8 +289,6 @@ Congratulations on your well-deserved increment!`;
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showGenerateDialog} onOpenChange={setShowGenerateDialog}>
         <DialogContent className="max-w-md">
@@ -451,7 +402,6 @@ Congratulations on your well-deserved increment!`;
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

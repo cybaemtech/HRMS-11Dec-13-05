@@ -3,15 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileArchive, Upload, Search, Eye, Download, CheckCircle, Clock, AlertCircle, FileText, Image } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function RecruitmentDocumentsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-=======
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -52,7 +43,6 @@ export default function RecruitmentDocumentsPage() {
   const [selectedDocument, setSelectedDocument] = useState<Document | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const requiredDocs = [
     { name: "Aadhar Card", description: "Government ID proof", mandatory: true },
@@ -65,22 +55,6 @@ export default function RecruitmentDocumentsPage() {
     { name: "Medical Certificate", description: "Fitness certificate", mandatory: false },
   ];
 
-<<<<<<< HEAD
-  const pendingDocuments = [
-    { candidate: "Rajesh Kumar", document: "PAN Card", submittedDate: "-", status: "Pending" },
-    { candidate: "Rajesh Kumar", document: "Medical Certificate", submittedDate: "-", status: "Pending" },
-    { candidate: "Priya Sharma", document: "Previous Employment Letter", submittedDate: "-", status: "Pending" },
-    { candidate: "Priya Sharma", document: "Address Proof", submittedDate: "-", status: "Pending" },
-    { candidate: "Amit Singh", document: "All Documents", submittedDate: "-", status: "Not Started" },
-  ];
-
-  const submittedDocuments = [
-    { candidate: "Sneha Patel", document: "Aadhar Card", submittedDate: "Jan 25, 2024", status: "Verified" },
-    { candidate: "Sneha Patel", document: "PAN Card", submittedDate: "Jan 25, 2024", status: "Verified" },
-    { candidate: "Rajesh Kumar", document: "Aadhar Card", submittedDate: "Jan 26, 2024", status: "Under Review" },
-    { candidate: "Rajesh Kumar", document: "Passport Photo", submittedDate: "Jan 26, 2024", status: "Verified" },
-  ];
-=======
   const [documents, setDocuments] = useState<Document[]>([
     { id: 1, candidate: "Sneha Patel", documentType: "Aadhar Card", fileName: "sneha_aadhar.pdf", fileSize: "1.2 MB", submittedDate: "Jan 25, 2024", status: "Verified", notes: "Document verified successfully." },
     { id: 2, candidate: "Sneha Patel", documentType: "PAN Card", fileName: "sneha_pan.pdf", fileSize: "856 KB", submittedDate: "Jan 25, 2024", status: "Verified", notes: "PAN verification complete." },
@@ -142,24 +116,18 @@ export default function RecruitmentDocumentsPage() {
         doc.document.toLowerCase().includes(query)
     );
   }, [pendingDocuments, searchQuery]);
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Verified": return "bg-green-100 text-green-700";
       case "Under Review": return "bg-blue-100 text-blue-700";
       case "Pending": return "bg-yellow-100 text-yellow-700";
-<<<<<<< HEAD
-=======
       case "Rejected": return "bg-red-100 text-red-700";
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       case "Not Started": return "bg-slate-100 text-slate-700";
       default: return "bg-slate-100 text-slate-700";
     }
   };
 
-<<<<<<< HEAD
-=======
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -351,7 +319,6 @@ export default function RecruitmentDocumentsPage() {
     return Array.from(candidates);
   }, [documents, pendingDocuments]);
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -364,20 +331,6 @@ export default function RecruitmentDocumentsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Document Portal</h1>
             <p className="text-slate-500 mt-1">Manage joining documents for new employees</p>
           </div>
-<<<<<<< HEAD
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-            <Input
-              placeholder="Search candidate..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9"
-              data-testid="input-search"
-            />
-          </div>
-        </motion.div>
-
-=======
           <div className="flex gap-3">
             <div className="relative w-full md:w-64">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -459,7 +412,6 @@ export default function RecruitmentDocumentsPage() {
           </motion.div>
         </div>
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-1">
             <CardHeader>
@@ -470,11 +422,7 @@ export default function RecruitmentDocumentsPage() {
               <CardDescription>Checklist for new joinees</CardDescription>
             </CardHeader>
             <CardContent>
-<<<<<<< HEAD
-              <div className="space-y-3">
-=======
               <div className="space-y-3 max-h-[400px] overflow-y-auto">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                 {requiredDocs.map((doc, index) => (
                   <div
                     key={index}
@@ -502,65 +450,6 @@ export default function RecruitmentDocumentsPage() {
               <CardTitle>Document Status</CardTitle>
             </CardHeader>
             <CardContent>
-<<<<<<< HEAD
-              <Tabs defaultValue="pending">
-                <TabsList>
-                  <TabsTrigger value="pending" data-testid="tab-pending">
-                    <Clock className="h-4 w-4 mr-2" />
-                    Pending ({pendingDocuments.length})
-                  </TabsTrigger>
-                  <TabsTrigger value="submitted" data-testid="tab-submitted">
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Submitted ({submittedDocuments.length})
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="pending" className="mt-4">
-                  <div className="space-y-3">
-                    {pendingDocuments.map((doc, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex items-center justify-between p-3 rounded-lg bg-slate-50"
-                        data-testid={`row-pending-${index}`}
-                      >
-                        <div>
-                          <p className="font-medium">{doc.candidate}</p>
-                          <p className="text-sm text-slate-500">{doc.document}</p>
-                        </div>
-                        <Badge className={getStatusColor(doc.status)}>{doc.status}</Badge>
-                      </motion.div>
-                    ))}
-                  </div>
-                </TabsContent>
-                <TabsContent value="submitted" className="mt-4">
-                  <div className="space-y-3">
-                    {submittedDocuments.map((doc, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        className="flex items-center justify-between p-3 rounded-lg bg-slate-50"
-                        data-testid={`row-submitted-${index}`}
-                      >
-                        <div>
-                          <p className="font-medium">{doc.candidate}</p>
-                          <p className="text-sm text-slate-500">{doc.document} • {doc.submittedDate}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge className={getStatusColor(doc.status)}>{doc.status}</Badge>
-                          <Button size="icon" variant="ghost">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="icon" variant="ghost">
-                            <Download className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </motion.div>
-                    ))}
-=======
               <Tabs defaultValue="submitted">
                 <TabsList>
                   <TabsTrigger value="submitted" data-testid="tab-submitted">
@@ -655,7 +544,6 @@ export default function RecruitmentDocumentsPage() {
                         </motion.div>
                       ))
                     )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                   </div>
                 </TabsContent>
               </Tabs>
@@ -663,8 +551,6 @@ export default function RecruitmentDocumentsPage() {
           </Card>
         </div>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
         <DialogContent className="max-w-lg">
@@ -908,7 +794,6 @@ export default function RecruitmentDocumentsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

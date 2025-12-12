@@ -2,25 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Receipt, Plus, IndianRupee, CheckCircle, Clock, Eye, Upload } from "lucide-react";
-import { motion } from "framer-motion";
-
-export default function ExpenseClaimsPage() {
-  const claimStats = [
-    { title: "Total Claims", value: "₹4,85,000", icon: <IndianRupee className="h-5 w-5" /> },
-    { title: "Approved", value: "₹3,45,000", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending", value: "₹1,40,000", icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "This Month", value: "32", icon: <Receipt className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-  ];
-
-  const claims = [
-    { employee: "John Doe", category: "Travel", description: "Client meeting travel", amount: 12500, date: "Jan 25, 2024", status: "Pending", receipts: 3 },
-    { employee: "Jane Smith", category: "Meals", description: "Team lunch", amount: 4500, date: "Jan 24, 2024", status: "Approved", receipts: 1 },
-    { employee: "Mike Johnson", category: "Equipment", description: "Laptop accessories", amount: 8000, date: "Jan 22, 2024", status: "Approved", receipts: 2 },
-    { employee: "Sarah Wilson", category: "Training", description: "Conference registration", amount: 25000, date: "Jan 20, 2024", status: "Pending", receipts: 1 },
-    { employee: "Tom Brown", category: "Travel", description: "Site visit expenses", amount: 18500, date: "Jan 18, 2024", status: "Rejected", receipts: 4 },
-=======
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -77,7 +58,6 @@ export default function ExpenseClaimsPage() {
     { title: "Approved", value: `₹${claims.filter(c => c.status === "Approved").reduce((sum, c) => sum + c.amount, 0).toLocaleString()}`, icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
     { title: "Pending", value: `₹${claims.filter(c => c.status === "Pending").reduce((sum, c) => sum + c.amount, 0).toLocaleString()}`, icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
     { title: "This Month", value: claims.length.toString(), icon: <Receipt className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   ];
 
   const getStatusColor = (status: string) => {
@@ -89,8 +69,6 @@ export default function ExpenseClaimsPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const filteredClaims = claims.filter(claim => {
     const matchesSearch = claim.employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          claim.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -161,7 +139,6 @@ export default function ExpenseClaimsPage() {
     setIsViewOpen(true);
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -174,11 +151,7 @@ export default function ExpenseClaimsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Expense Claims</h1>
             <p className="text-slate-500 mt-1">Submit and manage expense reimbursement claims</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-new-claim">
-=======
           <Button className="gap-2" onClick={() => setIsNewClaimOpen(true)} data-testid="button-new-claim">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             New Claim
           </Button>
@@ -211,13 +184,6 @@ export default function ExpenseClaimsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <Receipt className="h-5 w-5 text-teal-600" />
-              Expense Claims
-            </CardTitle>
-            <CardDescription>All expense claims and their approval status</CardDescription>
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -250,7 +216,6 @@ export default function ExpenseClaimsPage() {
                 </Select>
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -268,13 +233,8 @@ export default function ExpenseClaimsPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {claims.map((claim, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-claim-${index}`}>
-=======
                   {filteredClaims.map((claim, index) => (
                     <tr key={claim.id} className="border-b hover:bg-slate-50" data-testid={`row-claim-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{claim.employee}</td>
                       <td className="py-3 px-4">
                         <Badge variant="secondary">{claim.category}</Badge>
@@ -293,22 +253,13 @@ export default function ExpenseClaimsPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
-<<<<<<< HEAD
-                          <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-=======
                           <Button size="icon" variant="ghost" onClick={() => handleView(claim)} data-testid={`button-view-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                             <Eye className="h-4 w-4" />
                           </Button>
                           {claim.status === "Pending" && (
                             <>
-<<<<<<< HEAD
-                              <Button size="sm" data-testid={`button-approve-${index}`}>Approve</Button>
-                              <Button size="sm" variant="outline" data-testid={`button-reject-${index}`}>Reject</Button>
-=======
                               <Button size="sm" onClick={() => handleApprove(claim)} data-testid={`button-approve-${index}`}>Approve</Button>
                               <Button size="sm" variant="outline" onClick={() => handleReject(claim)} data-testid={`button-reject-${index}`}>Reject</Button>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                             </>
                           )}
                         </div>
@@ -317,18 +268,13 @@ export default function ExpenseClaimsPage() {
                   ))}
                 </tbody>
               </table>
-<<<<<<< HEAD
-=======
               {filteredClaims.length === 0 && (
                 <div className="text-center py-8 text-slate-500">No expense claims found</div>
               )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       {/* New Claim Dialog */}
       <Dialog open={isNewClaimOpen} onOpenChange={setIsNewClaimOpen}>
@@ -530,7 +476,6 @@ export default function ExpenseClaimsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

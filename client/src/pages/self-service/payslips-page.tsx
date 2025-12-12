@@ -3,14 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-<<<<<<< HEAD
-import { FileText, Download, Eye, IndianRupee, Calendar, TrendingUp } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function MyPayslipsPage() {
-  const [selectedYear, setSelectedYear] = useState("2024");
-=======
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { FileText, Download, Eye, IndianRupee, Calendar, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -47,25 +39,11 @@ export default function MyPayslipsPage() {
     { id: 5, month: "September 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid", basic: 50000, hra: 25000, allowances: 25000, pf: 6000, tax: 8000, other: 1000 },
     { id: 6, month: "August 2023", grossPay: 95000, deductions: 14000, netPay: 81000, status: "Paid", basic: 47500, hra: 23750, allowances: 23750, pf: 5700, tax: 7500, other: 800 },
   ];
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const payslipStats = [
     { title: "Current Month", value: "₹85,000", icon: <IndianRupee className="h-5 w-5" /> },
     { title: "YTD Earnings", value: "₹1,70,000", icon: <TrendingUp className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
     { title: "Tax Deducted", value: "₹15,000", icon: <IndianRupee className="h-5 w-5" />, color: "bg-red-50 text-red-600" },
-<<<<<<< HEAD
-    { title: "Total Payslips", value: "12", icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-  ];
-
-  const payslips = [
-    { month: "January 2024", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
-    { month: "December 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
-    { month: "November 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
-    { month: "October 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
-    { month: "September 2023", grossPay: 100000, deductions: 15000, netPay: 85000, status: "Paid" },
-    { month: "August 2023", grossPay: 95000, deductions: 14000, netPay: 81000, status: "Paid" },
-  ];
-=======
     { title: "Total Payslips", value: payslips.length.toString(), icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
   ];
 
@@ -123,7 +101,6 @@ export default function MyPayslipsPage() {
       description: `Payslip for ${payslip.month} downloaded successfully.`
     });
   };
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   return (
     <AppLayout>
@@ -197,13 +174,8 @@ export default function MyPayslipsPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {payslips.map((payslip, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-payslip-${index}`}>
-=======
                   {filteredPayslips.map((payslip, index) => (
                     <tr key={payslip.id} className="border-b hover:bg-slate-50" data-testid={`row-payslip-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{payslip.month}</td>
                       <td className="py-3 px-4">₹{payslip.grossPay.toLocaleString()}</td>
                       <td className="py-3 px-4 text-red-600">-₹{payslip.deductions.toLocaleString()}</td>
@@ -213,17 +185,10 @@ export default function MyPayslipsPage() {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
-<<<<<<< HEAD
-                          <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-=======
                           <Button size="icon" variant="ghost" onClick={() => handleView(payslip)} data-testid={`button-view-${index}`}>
                             <Eye className="h-4 w-4" />
                           </Button>
                           <Button size="icon" variant="ghost" onClick={() => handleDownload(payslip)} data-testid={`button-download-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                             <Download className="h-4 w-4" />
                           </Button>
                         </div>
@@ -236,8 +201,6 @@ export default function MyPayslipsPage() {
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showViewDialog} onOpenChange={setShowViewDialog}>
         <DialogContent className="max-w-2xl">
@@ -316,7 +279,6 @@ export default function MyPayslipsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

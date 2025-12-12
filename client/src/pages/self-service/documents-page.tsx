@@ -2,28 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Download, Eye, FileText, FileArchive, Upload, Award, FileCheck } from "lucide-react";
-import { motion } from "framer-motion";
-
-export default function MyDocumentsPage() {
-  const documentCategories = [
-    { name: "Tax Documents", count: 4, icon: <FileText className="h-5 w-5" /> },
-    { name: "HR Letters", count: 3, icon: <FileArchive className="h-5 w-5" /> },
-    { name: "Certificates", count: 2, icon: <Award className="h-5 w-5" /> },
-    { name: "Policies", count: 5, icon: <FileCheck className="h-5 w-5" /> },
-  ];
-
-  const documents = [
-    { name: "Form 16 - FY 2022-23", category: "Tax Documents", uploadedDate: "Jun 15, 2023", size: "2.4 MB" },
-    { name: "Appointment Letter", category: "HR Letters", uploadedDate: "Jan 10, 2022", size: "856 KB" },
-    { name: "Salary Certificate", category: "HR Letters", uploadedDate: "Dec 5, 2023", size: "520 KB" },
-    { name: "Form 16 - FY 2021-22", category: "Tax Documents", uploadedDate: "Jun 12, 2022", size: "2.1 MB" },
-    { name: "AWS Certification", category: "Certificates", uploadedDate: "Mar 20, 2023", size: "1.2 MB" },
-    { name: "Employee Handbook", category: "Policies", uploadedDate: "Jan 1, 2022", size: "4.5 MB" },
-    { name: "Leave Policy", category: "Policies", uploadedDate: "Jan 1, 2024", size: "1.1 MB" },
-  ];
-=======
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -120,7 +98,6 @@ export default function MyDocumentsPage() {
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(selectedCategory === category ? "all" : category);
   };
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   return (
     <AppLayout>
@@ -134,11 +111,7 @@ export default function MyDocumentsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">My Documents</h1>
             <p className="text-slate-500 mt-1">Access and download your personal documents</p>
           </div>
-<<<<<<< HEAD
-          <Button variant="outline" className="gap-2" data-testid="button-upload">
-=======
           <Button variant="outline" className="gap-2" onClick={() => setShowUploadDialog(true)} data-testid="button-upload">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Upload className="h-4 w-4" />
             Upload Document
           </Button>
@@ -152,15 +125,11 @@ export default function MyDocumentsPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-<<<<<<< HEAD
-              <Card className="hover-elevate cursor-pointer" data-testid={`card-category-${index}`}>
-=======
               <Card 
                 className={`hover-elevate cursor-pointer ${selectedCategory === category.name ? 'ring-2 ring-teal-500' : ''}`} 
                 onClick={() => handleCategoryClick(category.name)}
                 data-testid={`card-category-${index}`}
               >
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className="p-3 rounded-lg bg-teal-50 text-teal-600">
@@ -177,19 +146,6 @@ export default function MyDocumentsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <FileArchive className="h-5 w-5 text-teal-600" />
-              All Documents
-            </CardTitle>
-            <CardDescription>Your personal and company documents</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {documents.map((doc, index) => (
-                <motion.div
-                  key={index}
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -229,7 +185,6 @@ export default function MyDocumentsPage() {
               {filteredDocuments.map((doc, index) => (
                 <motion.div
                   key={doc.id}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -246,36 +201,24 @@ export default function MyDocumentsPage() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-<<<<<<< HEAD
-                    <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-=======
                     <Button size="icon" variant="ghost" onClick={() => handleView(doc)} data-testid={`button-view-${index}`}>
                       <Eye className="h-4 w-4" />
                     </Button>
                     <Button size="icon" variant="ghost" onClick={() => handleDownload(doc)} data-testid={`button-download-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <Download className="h-4 w-4" />
                     </Button>
                   </div>
                 </motion.div>
               ))}
-<<<<<<< HEAD
-=======
               {filteredDocuments.length === 0 && (
                 <div className="text-center py-8 text-slate-500">
                   No documents found matching your criteria.
                 </div>
               )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
         <DialogContent className="max-w-md">
@@ -365,7 +308,6 @@ export default function MyDocumentsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

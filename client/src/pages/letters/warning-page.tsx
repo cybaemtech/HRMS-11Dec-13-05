@@ -3,29 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { AlertTriangle, Plus, Search, Download, Eye, FileText } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function WarningLettersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const letterStats = [
-    { title: "Total Issued", value: "24", icon: <AlertTriangle className="h-5 w-5" />, color: "bg-red-50 text-red-600" },
-    { title: "This Year", value: "8", icon: <FileText className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "First Warning", value: "18", icon: <AlertTriangle className="h-5 w-5" />, color: "bg-orange-50 text-orange-600" },
-    { title: "Final Warning", value: "6", icon: <AlertTriangle className="h-5 w-5" />, color: "bg-red-50 text-red-600" },
-  ];
-
-  const letters = [
-    { employee: "John Smith", department: "Engineering", reason: "Repeated tardiness", type: "First Warning", issueDate: "Jan 15, 2024", status: "Issued" },
-    { employee: "Mike Davis", department: "Sales", reason: "Policy violation", type: "First Warning", issueDate: "Jan 10, 2024", status: "Acknowledged" },
-    { employee: "Sarah Brown", department: "Marketing", reason: "Unprofessional conduct", type: "Final Warning", issueDate: "Dec 20, 2023", status: "Acknowledged" },
-    { employee: "Tom Wilson", department: "Operations", reason: "Attendance issues", type: "First Warning", issueDate: "Dec 15, 2023", status: "Issued" },
-    { employee: "Lisa Chen", department: "Finance", reason: "Performance concerns", type: "First Warning", issueDate: "Nov 28, 2023", status: "Acknowledged" },
-  ];
-=======
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -83,7 +60,6 @@ export default function WarningLettersPage() {
     letter.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
     letter.reason.toLowerCase().includes(searchQuery.toLowerCase())
   );
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getTypeColor = (type: string) => {
     switch (type) {
@@ -101,8 +77,6 @@ export default function WarningLettersPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const generatePDF = (letter: WarningLetter) => {
     const doc = new jsPDF();
     
@@ -192,7 +166,6 @@ You are required to acknowledge receipt of this letter by signing below.`;
     });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -205,11 +178,7 @@ You are required to acknowledge receipt of this letter by signing below.`;
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Warning Letters</h1>
             <p className="text-slate-500 mt-1">Issue and manage disciplinary warning letters</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-issue-warning">
-=======
           <Button className="gap-2" onClick={() => setShowIssueDialog(true)} data-testid="button-issue-warning">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             Issue Warning
           </Button>
@@ -277,13 +246,8 @@ You are required to acknowledge receipt of this letter by signing below.`;
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {letters.map((letter, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
-=======
                   {filteredLetters.map((letter, index) => (
                     <tr key={letter.id} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{letter.employee}</td>
                       <td className="py-3 px-4 text-slate-600">{letter.department}</td>
                       <td className="py-3 px-4 text-slate-600">{letter.reason}</td>
@@ -296,17 +260,10 @@ You are required to acknowledge receipt of this letter by signing below.`;
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex gap-2">
-<<<<<<< HEAD
-                          <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-=======
                           <Button size="icon" variant="ghost" onClick={() => handleView(letter)} data-testid={`button-view-${index}`}>
                             <Eye className="h-4 w-4" />
                           </Button>
                           <Button size="icon" variant="ghost" onClick={() => handleDownload(letter)} data-testid={`button-download-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                             <Download className="h-4 w-4" />
                           </Button>
                         </div>
@@ -319,8 +276,6 @@ You are required to acknowledge receipt of this letter by signing below.`;
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showIssueDialog} onOpenChange={setShowIssueDialog}>
         <DialogContent className="max-w-md">
@@ -446,7 +401,6 @@ You are required to acknowledge receipt of this letter by signing below.`;
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

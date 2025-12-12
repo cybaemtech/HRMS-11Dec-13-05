@@ -3,29 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { Award, Plus, Search, Download, Eye, Send, FileText } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function ExperienceLettersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const letterStats = [
-    { title: "Total Generated", value: "86", icon: <Award className="h-5 w-5" /> },
-    { title: "This Year", value: "24", icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-    { title: "Sent", value: "78", icon: <Send className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending", value: "8", icon: <FileText className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-  ];
-
-  const letters = [
-    { employee: "Alex Johnson", position: "Software Engineer", department: "Engineering", tenure: "3 years 2 months", lastDay: "Jan 31, 2024", status: "Generated" },
-    { employee: "Emily Davis", position: "Senior Designer", department: "Design", tenure: "2 years 8 months", lastDay: "Jan 25, 2024", status: "Sent" },
-    { employee: "Chris Wilson", position: "Product Manager", department: "Product", tenure: "4 years 5 months", lastDay: "Jan 20, 2024", status: "Sent" },
-    { employee: "Rachel Green", position: "Marketing Lead", department: "Marketing", tenure: "2 years 1 month", lastDay: "Feb 15, 2024", status: "Pending" },
-    { employee: "James Brown", position: "Sales Manager", department: "Sales", tenure: "5 years 3 months", lastDay: "Feb 28, 2024", status: "Pending" },
-  ];
-=======
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -82,7 +59,6 @@ export default function ExperienceLettersPage() {
     letter.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
     letter.position.toLowerCase().includes(searchQuery.toLowerCase())
   );
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -93,8 +69,6 @@ export default function ExperienceLettersPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const generatePDF = (letter: ExperienceLetter) => {
     const doc = new jsPDF();
     
@@ -213,7 +187,6 @@ This certificate is issued upon request for employment purposes.`;
     }
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -226,11 +199,7 @@ This certificate is issued upon request for employment purposes.`;
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Experience Letters</h1>
             <p className="text-slate-500 mt-1">Generate experience and relieving letters</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-generate-letter">
-=======
           <Button className="gap-2" onClick={() => setShowGenerateDialog(true)} data-testid="button-generate-letter">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             Generate Letter
           </Button>
@@ -298,13 +267,8 @@ This certificate is issued upon request for employment purposes.`;
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {letters.map((letter, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
-=======
                   {filteredLetters.map((letter, index) => (
                     <tr key={letter.id} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{letter.employee}</td>
                       <td className="py-3 px-4">{letter.position}</td>
                       <td className="py-3 px-4 text-slate-600">{letter.department}</td>
@@ -317,16 +281,6 @@ This certificate is issued upon request for employment purposes.`;
                         <div className="flex gap-2">
                           {letter.status !== "Pending" ? (
                             <>
-<<<<<<< HEAD
-                              <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                              <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-                                <Download className="h-4 w-4" />
-                              </Button>
-                              {letter.status === "Generated" && (
-                                <Button size="icon" variant="ghost" data-testid={`button-send-${index}`}>
-=======
                               <Button size="icon" variant="ghost" onClick={() => handleView(letter)} data-testid={`button-view-${index}`}>
                                 <Eye className="h-4 w-4" />
                               </Button>
@@ -335,17 +289,12 @@ This certificate is issued upon request for employment purposes.`;
                               </Button>
                               {letter.status === "Generated" && (
                                 <Button size="icon" variant="ghost" onClick={() => handleSend(letter)} data-testid={`button-send-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                                   <Send className="h-4 w-4" />
                                 </Button>
                               )}
                             </>
                           ) : (
-<<<<<<< HEAD
-                            <Button size="sm" data-testid={`button-generate-${index}`}>Generate</Button>
-=======
                             <Button size="sm" onClick={() => handleGenerate(letter.id)} data-testid={`button-generate-${index}`}>Generate</Button>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                           )}
                         </div>
                       </td>
@@ -357,8 +306,6 @@ This certificate is issued upon request for employment purposes.`;
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showGenerateDialog} onOpenChange={setShowGenerateDialog}>
         <DialogContent className="max-w-md">
@@ -472,7 +419,6 @@ This certificate is issued upon request for employment purposes.`;
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

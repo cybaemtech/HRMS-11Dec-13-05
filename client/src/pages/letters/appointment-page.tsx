@@ -3,29 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { FileSignature, Plus, Search, Download, Eye, Send, FileText } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function AppointmentLettersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const letterStats = [
-    { title: "Total Generated", value: "186", icon: <FileSignature className="h-5 w-5" /> },
-    { title: "This Month", value: "12", icon: <FileText className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-    { title: "Sent", value: "172", icon: <Send className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending", value: "14", icon: <FileText className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-  ];
-
-  const letters = [
-    { employee: "John Doe", position: "Senior Developer", department: "Engineering", joinDate: "Feb 1, 2024", generatedDate: "Jan 20, 2024", status: "Sent" },
-    { employee: "Jane Smith", position: "Marketing Manager", department: "Marketing", joinDate: "Feb 5, 2024", generatedDate: "Jan 22, 2024", status: "Pending" },
-    { employee: "Mike Johnson", position: "Sales Executive", department: "Sales", joinDate: "Feb 10, 2024", generatedDate: "Jan 25, 2024", status: "Sent" },
-    { employee: "Sarah Wilson", position: "HR Executive", department: "HR", joinDate: "Jan 28, 2024", generatedDate: "Jan 15, 2024", status: "Sent" },
-    { employee: "Tom Brown", position: "Finance Analyst", department: "Finance", joinDate: "Feb 15, 2024", generatedDate: "-", status: "Not Generated" },
-  ];
-=======
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -82,7 +59,6 @@ export default function AppointmentLettersPage() {
     letter.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
     letter.position.toLowerCase().includes(searchQuery.toLowerCase())
   );
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -93,8 +69,6 @@ export default function AppointmentLettersPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const generatePDF = (letter: AppointmentLetter) => {
     const doc = new jsPDF();
     
@@ -192,7 +166,6 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
     }
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -205,11 +178,7 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Appointment Letters</h1>
             <p className="text-slate-500 mt-1">Generate and manage employee appointment letters</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-generate-letter">
-=======
           <Button className="gap-2" onClick={() => setShowGenerateDialog(true)} data-testid="button-generate-letter">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             Generate Letter
           </Button>
@@ -277,13 +246,8 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {letters.map((letter, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
-=======
                   {filteredLetters.map((letter, index) => (
                     <tr key={letter.id} className="border-b hover:bg-slate-50" data-testid={`row-letter-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{letter.employee}</td>
                       <td className="py-3 px-4">{letter.position}</td>
                       <td className="py-3 px-4 text-slate-600">{letter.department}</td>
@@ -296,16 +260,6 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
                         <div className="flex gap-2">
                           {letter.status !== "Not Generated" ? (
                             <>
-<<<<<<< HEAD
-                              <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                                <Eye className="h-4 w-4" />
-                              </Button>
-                              <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-                                <Download className="h-4 w-4" />
-                              </Button>
-                              {letter.status === "Pending" && (
-                                <Button size="icon" variant="ghost" data-testid={`button-send-${index}`}>
-=======
                               <Button size="icon" variant="ghost" onClick={() => handleView(letter)} data-testid={`button-view-${index}`}>
                                 <Eye className="h-4 w-4" />
                               </Button>
@@ -314,17 +268,12 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
                               </Button>
                               {letter.status === "Pending" && (
                                 <Button size="icon" variant="ghost" onClick={() => handleSend(letter)} data-testid={`button-send-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                                   <Send className="h-4 w-4" />
                                 </Button>
                               )}
                             </>
                           ) : (
-<<<<<<< HEAD
-                            <Button size="sm" data-testid={`button-generate-${index}`}>Generate</Button>
-=======
                             <Button size="sm" onClick={() => handleGenerate(letter.id)} data-testid={`button-generate-${index}`}>Generate</Button>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                           )}
                         </div>
                       </td>
@@ -336,8 +285,6 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showGenerateDialog} onOpenChange={setShowGenerateDialog}>
         <DialogContent className="max-w-md">
@@ -452,7 +399,6 @@ Please sign and return a copy of this letter to confirm your acceptance of this 
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

@@ -2,25 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Truck, Plus, MapPin, Calendar, Clock, CheckCircle, Eye } from "lucide-react";
-import { motion } from "framer-motion";
-
-export default function TravelRequestsPage() {
-  const travelStats = [
-    { title: "Total Requests", value: "28", icon: <Truck className="h-5 w-5" /> },
-    { title: "Approved", value: "18", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending", value: "8", icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "This Month", value: "12", icon: <Calendar className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-  ];
-
-  const travelRequests = [
-    { employee: "John Doe", destination: "Mumbai → Delhi", purpose: "Client Meeting", startDate: "Feb 5, 2024", endDate: "Feb 7, 2024", status: "Approved" },
-    { employee: "Jane Smith", destination: "Bangalore → Chennai", purpose: "Training Workshop", startDate: "Feb 10, 2024", endDate: "Feb 12, 2024", status: "Pending" },
-    { employee: "Mike Johnson", destination: "Pune → Hyderabad", purpose: "Sales Conference", startDate: "Feb 15, 2024", endDate: "Feb 18, 2024", status: "Approved" },
-    { employee: "Sarah Wilson", destination: "Delhi → Kolkata", purpose: "HR Summit", startDate: "Feb 20, 2024", endDate: "Feb 22, 2024", status: "Pending" },
-    { employee: "Tom Brown", destination: "Mumbai → Goa", purpose: "Team Offsite", startDate: "Feb 25, 2024", endDate: "Feb 28, 2024", status: "Pending" },
-=======
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -81,7 +62,6 @@ export default function TravelRequestsPage() {
     { title: "Approved", value: travelRequests.filter(r => r.status === "Approved").length.toString(), icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
     { title: "Pending", value: travelRequests.filter(r => r.status === "Pending").length.toString(), icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
     { title: "This Month", value: travelRequests.length.toString(), icon: <Calendar className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   ];
 
   const getStatusColor = (status: string) => {
@@ -93,8 +73,6 @@ export default function TravelRequestsPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const filteredRequests = travelRequests.filter(request => {
     const matchesSearch = request.employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          request.destination.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -181,7 +159,6 @@ export default function TravelRequestsPage() {
     }
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -194,11 +171,7 @@ export default function TravelRequestsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Travel Requests</h1>
             <p className="text-slate-500 mt-1">Manage business travel requests and approvals</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-new-request">
-=======
           <Button className="gap-2" onClick={() => setIsNewRequestOpen(true)} data-testid="button-new-request">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             New Travel Request
           </Button>
@@ -231,19 +204,6 @@ export default function TravelRequestsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <Truck className="h-5 w-5 text-teal-600" />
-              Travel Requests
-            </CardTitle>
-            <CardDescription>All travel requests and their approval status</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {travelRequests.map((request, index) => (
-                <motion.div
-                  key={index}
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -282,7 +242,6 @@ export default function TravelRequestsPage() {
               {filteredRequests.map((request, index) => (
                 <motion.div
                   key={request.id}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
@@ -304,54 +263,37 @@ export default function TravelRequestsPage() {
                           <Calendar className="h-4 w-4" />
                           {request.startDate} - {request.endDate}
                         </span>
-<<<<<<< HEAD
-=======
                         {request.travelMode && (
                           <span className="flex items-center gap-1">
                             {getTravelModeIcon(request.travelMode)}
                             {request.travelMode}
                           </span>
                         )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       </div>
                       <p className="text-sm text-slate-500 mt-2">Purpose: {request.purpose}</p>
                     </div>
                     <div className="flex gap-2">
-<<<<<<< HEAD
-                      <Button variant="outline" size="sm" className="gap-1" data-testid={`button-view-${index}`}>
-=======
                       <Button variant="outline" size="sm" className="gap-1" onClick={() => handleView(request)} data-testid={`button-view-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                         <Eye className="h-4 w-4" />
                         View
                       </Button>
                       {request.status === "Pending" && (
                         <>
-<<<<<<< HEAD
-                          <Button size="sm" data-testid={`button-approve-${index}`}>Approve</Button>
-                          <Button size="sm" variant="outline" data-testid={`button-reject-${index}`}>Reject</Button>
-=======
                           <Button size="sm" onClick={() => handleApprove(request)} data-testid={`button-approve-${index}`}>Approve</Button>
                           <Button size="sm" variant="outline" onClick={() => handleReject(request)} data-testid={`button-reject-${index}`}>Reject</Button>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                         </>
                       )}
                     </div>
                   </div>
                 </motion.div>
               ))}
-<<<<<<< HEAD
-=======
               {filteredRequests.length === 0 && (
                 <div className="text-center py-8 text-slate-500">No travel requests found</div>
               )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       {/* New Travel Request Dialog */}
       <Dialog open={isNewRequestOpen} onOpenChange={setIsNewRequestOpen}>
@@ -595,7 +537,6 @@ export default function TravelRequestsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

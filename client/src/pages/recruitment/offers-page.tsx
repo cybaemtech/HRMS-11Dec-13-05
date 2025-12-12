@@ -3,29 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { FileSignature, Plus, Search, Send, Eye, Download, CheckCircle, Clock, XCircle } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function OfferLettersPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const offerStats = [
-    { title: "Total Offers", value: "24", icon: <FileSignature className="h-5 w-5" /> },
-    { title: "Accepted", value: "18", icon: <CheckCircle className="h-5 w-5" />, color: "text-green-600 bg-green-50" },
-    { title: "Pending", value: "4", icon: <Clock className="h-5 w-5" />, color: "text-yellow-600 bg-yellow-50" },
-    { title: "Declined", value: "2", icon: <XCircle className="h-5 w-5" />, color: "text-red-600 bg-red-50" },
-  ];
-
-  const offers = [
-    { candidate: "Rajesh Kumar", position: "Senior Developer", department: "Engineering", ctc: 1800000, sentDate: "Jan 15, 2024", status: "Accepted" },
-    { candidate: "Priya Sharma", position: "Marketing Manager", department: "Marketing", ctc: 1200000, sentDate: "Jan 18, 2024", status: "Pending" },
-    { candidate: "Amit Singh", position: "Sales Executive", department: "Sales", ctc: 800000, sentDate: "Jan 20, 2024", status: "Pending" },
-    { candidate: "Sneha Patel", position: "HR Executive", department: "HR", ctc: 700000, sentDate: "Jan 22, 2024", status: "Accepted" },
-    { candidate: "Vikram Malhotra", position: "Finance Analyst", department: "Finance", ctc: 1000000, sentDate: "Jan 10, 2024", status: "Declined" },
-  ];
-=======
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -131,7 +108,6 @@ export default function OfferLettersPage() {
         offer.department.toLowerCase().includes(query)
     );
   }, [offers, searchQuery]);
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -142,8 +118,6 @@ export default function OfferLettersPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const generateOfferLetterPDF = (offer: OfferLetter) => {
     const doc = new jsPDF();
     
@@ -347,7 +321,6 @@ export default function OfferLettersPage() {
     });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -360,11 +333,7 @@ export default function OfferLettersPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Offer Letters</h1>
             <p className="text-slate-500 mt-1">Create and manage offer letters for candidates</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-create-offer">
-=======
           <Button className="gap-2" onClick={() => { resetFormData(); setShowCreateDialog(true); }} data-testid="button-create-offer">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             Create Offer Letter
           </Button>
@@ -429,37 +398,17 @@ export default function OfferLettersPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {offers.map((offer, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-offer-${index}`}>
-                      <td className="py-3 px-4 font-medium">{offer.candidate}</td>
-                      <td className="py-3 px-4 text-slate-600">{offer.position}</td>
-                      <td className="py-3 px-4 text-slate-600">{offer.department}</td>
-                      <td className="py-3 px-4 font-medium">₹{(offer.ctc / 100000).toFixed(1)} LPA</td>
-=======
                   {filteredOffers.map((offer, index) => (
                     <tr key={offer.id} className="border-b hover:bg-slate-50" data-testid={`row-offer-${index}`}>
                       <td className="py-3 px-4 font-medium">{offer.candidate}</td>
                       <td className="py-3 px-4 text-slate-600">{offer.position}</td>
                       <td className="py-3 px-4 text-slate-600">{offer.department}</td>
                       <td className="py-3 px-4 font-medium">Rs.{(offer.ctc / 100000).toFixed(1)} LPA</td>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 text-slate-600">{offer.sentDate}</td>
                       <td className="py-3 px-4">
                         <Badge className={getStatusColor(offer.status)}>{offer.status}</Badge>
                       </td>
                       <td className="py-3 px-4">
-<<<<<<< HEAD
-                        <div className="flex gap-2">
-                          <Button size="icon" variant="ghost" data-testid={`button-view-${index}`}>
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="icon" variant="ghost" data-testid={`button-download-${index}`}>
-                            <Download className="h-4 w-4" />
-                          </Button>
-                          {offer.status === "Pending" && (
-                            <Button size="icon" variant="ghost" data-testid={`button-resend-${index}`}>
-=======
                         <div className="flex gap-1">
                           <Button size="icon" variant="ghost" onClick={() => handleViewOffer(offer)} data-testid={`button-view-${index}`}>
                             <Eye className="h-4 w-4" />
@@ -472,7 +421,6 @@ export default function OfferLettersPage() {
                           </Button>
                           {offer.status === "Pending" && (
                             <Button size="icon" variant="ghost" onClick={() => handleResendOffer(offer)} data-testid={`button-resend-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                               <Send className="h-4 w-4" />
                             </Button>
                           )}
@@ -486,8 +434,6 @@ export default function OfferLettersPage() {
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -835,7 +781,6 @@ export default function OfferLettersPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

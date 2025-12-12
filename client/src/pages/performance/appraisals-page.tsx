@@ -2,30 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TrendingUp, Calendar, Star, Users, FileText, CheckCircle, Clock } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function AppraisalsPage() {
-  const [selectedCycle, setSelectedCycle] = useState("Q4 2023");
-
-  const appraisalStats = [
-    { title: "Total Employees", value: "156", icon: <Users className="h-5 w-5" /> },
-    { title: "Completed", value: "128", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending", value: "28", icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "Avg Rating", value: "4.2", icon: <Star className="h-5 w-5" />, color: "bg-amber-50 text-amber-600" },
-  ];
-
-  const appraisals = [
-    { employee: "John Doe", department: "Engineering", manager: "Sarah Wilson", selfRating: 4.5, managerRating: 4.2, status: "Completed" },
-    { employee: "Jane Smith", department: "Marketing", manager: "Mike Johnson", selfRating: 4.0, managerRating: null, status: "Manager Review" },
-    { employee: "Amit Singh", department: "Sales", manager: "Priya Sharma", selfRating: null, managerRating: null, status: "Self Review" },
-    { employee: "Sneha Patel", department: "HR", manager: "Tom Brown", selfRating: 4.3, managerRating: 4.5, status: "Completed" },
-    { employee: "Rajesh Kumar", department: "Finance", manager: "Lisa Chen", selfRating: 3.8, managerRating: 4.0, status: "Completed" },
-  ];
-=======
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -82,7 +58,6 @@ export default function AppraisalsPage() {
   ];
 
   const departments = ["Engineering", "Marketing", "Sales", "HR", "Finance"];
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -103,8 +78,6 @@ export default function AppraisalsPage() {
     );
   };
 
-<<<<<<< HEAD
-=======
   const handleCreateCycle = () => {
     if (!newCycle.name || !newCycle.startDate || !newCycle.endDate) {
       toast({
@@ -149,7 +122,6 @@ export default function AppraisalsPage() {
     return matchesDepartment && matchesStatus && matchesSearch;
   });
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -162,11 +134,7 @@ export default function AppraisalsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Performance Appraisals</h1>
             <p className="text-slate-500 mt-1">Manage employee performance reviews and ratings</p>
           </div>
-<<<<<<< HEAD
-          <div className="flex gap-2">
-=======
           <div className="flex flex-wrap gap-2">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Select value={selectedCycle} onValueChange={setSelectedCycle}>
               <SelectTrigger className="w-32" data-testid="select-cycle">
                 <Calendar className="h-4 w-4 mr-2" />
@@ -176,18 +144,11 @@ export default function AppraisalsPage() {
                 <SelectItem value="Q4 2023">Q4 2023</SelectItem>
                 <SelectItem value="Q3 2023">Q3 2023</SelectItem>
                 <SelectItem value="Q2 2023">Q2 2023</SelectItem>
-<<<<<<< HEAD
-              </SelectContent>
-            </Select>
-            <Button className="gap-2" data-testid="button-new-cycle">
-              <TrendingUp className="h-4 w-4" />
-=======
                 <SelectItem value="Q1 2023">Q1 2023</SelectItem>
               </SelectContent>
             </Select>
             <Button className="gap-2" data-testid="button-new-cycle" onClick={() => setIsNewCycleOpen(true)}>
               <Plus className="h-4 w-4" />
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               New Appraisal Cycle
             </Button>
           </div>
@@ -220,13 +181,6 @@ export default function AppraisalsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-teal-600" />
-              Appraisal Status - {selectedCycle}
-            </CardTitle>
-            <CardDescription>Employee performance review status</CardDescription>
-=======
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -267,7 +221,6 @@ export default function AppraisalsPage() {
                 </Select>
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -284,26 +237,6 @@ export default function AppraisalsPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {appraisals.map((appraisal, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-appraisal-${index}`}>
-                      <td className="py-3 px-4 font-medium">{appraisal.employee}</td>
-                      <td className="py-3 px-4 text-slate-600">{appraisal.department}</td>
-                      <td className="py-3 px-4 text-slate-600">{appraisal.manager}</td>
-                      <td className="py-3 px-4">{renderRating(appraisal.selfRating)}</td>
-                      <td className="py-3 px-4">{renderRating(appraisal.managerRating)}</td>
-                      <td className="py-3 px-4">
-                        <Badge className={getStatusColor(appraisal.status)}>{appraisal.status}</Badge>
-                      </td>
-                      <td className="py-3 px-4">
-                        <Button size="sm" variant="outline" className="gap-1" data-testid={`button-view-${index}`}>
-                          <FileText className="h-3 w-3" />
-                          View
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-=======
                   {filteredAppraisals.length === 0 ? (
                     <tr>
                       <td colSpan={7} className="py-8 text-center text-slate-500">
@@ -330,15 +263,12 @@ export default function AppraisalsPage() {
                       </tr>
                     ))
                   )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                 </tbody>
               </table>
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       {/* New Appraisal Cycle Dialog */}
       <Dialog open={isNewCycleOpen} onOpenChange={setIsNewCycleOpen}>
@@ -520,7 +450,6 @@ export default function AppraisalsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

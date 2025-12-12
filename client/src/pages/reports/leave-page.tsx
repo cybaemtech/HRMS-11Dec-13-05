@@ -2,15 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CalendarDays, Download, Calendar, TrendingUp, Users, Clock } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function LeaveReportPage() {
-  const [selectedYear, setSelectedYear] = useState("2024");
-=======
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CalendarDays, Download, Calendar, TrendingUp, Users, Clock, Search, FileSpreadsheet } from "lucide-react";
@@ -25,7 +16,6 @@ export default function LeaveReportPage() {
   const [selectedYear, setSelectedYear] = useState("2024");
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const leaveStats = [
     { title: "Total Leave Taken", value: "456", icon: <CalendarDays className="h-5 w-5" />, color: "bg-teal-50 text-teal-600" },
@@ -42,8 +32,6 @@ export default function LeaveReportPage() {
     { type: "Maternity/Paternity", taken: 10, balance: 45, utilized: 18 },
   ];
 
-<<<<<<< HEAD
-=======
   const filteredData = leaveTypeData.filter(item =>
     item.type.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -120,7 +108,6 @@ export default function LeaveReportPage() {
     });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -145,11 +132,6 @@ export default function LeaveReportPage() {
                 <SelectItem value="2022">2022</SelectItem>
               </SelectContent>
             </Select>
-<<<<<<< HEAD
-            <Button variant="outline" className="gap-2" data-testid="button-export">
-              <Download className="h-4 w-4" />
-              Export
-=======
             <Button variant="outline" className="gap-2" onClick={handleExportPDF} data-testid="button-export-pdf">
               <Download className="h-4 w-4" />
               PDF
@@ -157,7 +139,6 @@ export default function LeaveReportPage() {
             <Button variant="outline" className="gap-2" onClick={handleExportExcel} data-testid="button-export-excel">
               <FileSpreadsheet className="h-4 w-4" />
               Excel
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </Button>
           </div>
         </motion.div>
@@ -189,13 +170,6 @@ export default function LeaveReportPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <CalendarDays className="h-5 w-5 text-teal-600" />
-              Leave Type Summary
-            </CardTitle>
-            <CardDescription>Leave utilization by type for {selectedYear}</CardDescription>
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -215,7 +189,6 @@ export default function LeaveReportPage() {
                 />
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -230,11 +203,7 @@ export default function LeaveReportPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {leaveTypeData.map((item, index) => (
-=======
                   {filteredData.map((item, index) => (
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                     <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-leave-${index}`}>
                       <td className="py-3 px-4 font-medium">{item.type}</td>
                       <td className="py-3 px-4">{item.taken} days</td>

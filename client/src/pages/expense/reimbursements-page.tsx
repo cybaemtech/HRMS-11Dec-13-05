@@ -2,29 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Wallet, Download, IndianRupee, CheckCircle, Clock, Calendar, Building2 } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function ReimbursementsPage() {
-  const [selectedMonth, setSelectedMonth] = useState("January 2024");
-
-  const reimbursementStats = [
-    { title: "Total Pending", value: "₹2,45,000", icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "Paid This Month", value: "₹8,75,000", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Total Employees", value: "45", icon: <Wallet className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
-    { title: "Processing", value: "12", icon: <Building2 className="h-5 w-5" />, color: "bg-purple-50 text-purple-600" },
-  ];
-
-  const reimbursements = [
-    { employee: "John Doe", category: "Travel", claimAmount: 25000, approvedAmount: 22500, status: "Pending", dueDate: "Jan 30, 2024" },
-    { employee: "Jane Smith", category: "Equipment", claimAmount: 15000, approvedAmount: 15000, status: "Paid", paidDate: "Jan 25, 2024" },
-    { employee: "Mike Johnson", category: "Meals", claimAmount: 8500, approvedAmount: 8000, status: "Processing", dueDate: "Feb 5, 2024" },
-    { employee: "Sarah Wilson", category: "Training", claimAmount: 35000, approvedAmount: 35000, status: "Paid", paidDate: "Jan 20, 2024" },
-    { employee: "Tom Brown", category: "Travel", claimAmount: 18500, approvedAmount: 17000, status: "Pending", dueDate: "Feb 10, 2024" },
-=======
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -73,7 +50,6 @@ export default function ReimbursementsPage() {
     { title: "Paid This Month", value: `₹${reimbursements.filter(r => r.status === "Paid").reduce((sum, r) => sum + r.approvedAmount, 0).toLocaleString()}`, icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
     { title: "Total Employees", value: new Set(reimbursements.map(r => r.employee)).size.toString(), icon: <Wallet className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
     { title: "Processing", value: reimbursements.filter(r => r.status === "Processing").length.toString(), icon: <Building2 className="h-5 w-5" />, color: "bg-purple-50 text-purple-600" },
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   ];
 
   const getStatusColor = (status: string) => {
@@ -85,8 +61,6 @@ export default function ReimbursementsPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const filteredReimbursements = reimbursements.filter(item => {
     const matchesSearch = item.employee.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -190,7 +164,6 @@ export default function ReimbursementsPage() {
     toast({ title: "Export Complete", description: "Reimbursement report has been downloaded" });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -213,17 +186,11 @@ export default function ReimbursementsPage() {
                 <SelectItem value="January 2024">January 2024</SelectItem>
                 <SelectItem value="December 2023">December 2023</SelectItem>
                 <SelectItem value="November 2023">November 2023</SelectItem>
-<<<<<<< HEAD
-              </SelectContent>
-            </Select>
-            <Button variant="outline" className="gap-2" data-testid="button-export">
-=======
                 <SelectItem value="October 2023">October 2023</SelectItem>
                 <SelectItem value="September 2023">September 2023</SelectItem>
               </SelectContent>
             </Select>
             <Button variant="outline" className="gap-2" onClick={handleExport} data-testid="button-export">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               <Download className="h-4 w-4" />
               Export
             </Button>
@@ -257,13 +224,6 @@ export default function ReimbursementsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <Wallet className="h-5 w-5 text-teal-600" />
-              Reimbursement Status
-            </CardTitle>
-            <CardDescription>Track payment status for approved claims</CardDescription>
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -296,7 +256,6 @@ export default function ReimbursementsPage() {
                 </Select>
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -313,13 +272,8 @@ export default function ReimbursementsPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {reimbursements.map((item, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-reimbursement-${index}`}>
-=======
                   {filteredReimbursements.map((item, index) => (
                     <tr key={item.id} className="border-b hover:bg-slate-50" data-testid={`row-reimbursement-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{item.employee}</td>
                       <td className="py-3 px-4">
                         <Badge variant="secondary">{item.category}</Badge>
@@ -333,14 +287,6 @@ export default function ReimbursementsPage() {
                         {item.status === "Paid" ? item.paidDate : `Due: ${item.dueDate}`}
                       </td>
                       <td className="py-3 px-4">
-<<<<<<< HEAD
-                        {item.status === "Pending" && (
-                          <Button size="sm" data-testid={`button-process-${index}`}>Process</Button>
-                        )}
-                        {item.status === "Processing" && (
-                          <Button size="sm" data-testid={`button-complete-${index}`}>Mark Paid</Button>
-                        )}
-=======
                         <div className="flex gap-2">
                           <Button size="icon" variant="ghost" onClick={() => handleView(item)} data-testid={`button-view-${index}`}>
                             <Eye className="h-4 w-4" />
@@ -352,24 +298,18 @@ export default function ReimbursementsPage() {
                             <Button size="sm" onClick={() => handleMarkPaid(item)} data-testid={`button-complete-${index}`}>Mark Paid</Button>
                           )}
                         </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-<<<<<<< HEAD
-=======
               {filteredReimbursements.length === 0 && (
                 <div className="text-center py-8 text-slate-500">No reimbursements found</div>
               )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       {/* View Reimbursement Dialog */}
       <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
@@ -474,7 +414,6 @@ export default function ReimbursementsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

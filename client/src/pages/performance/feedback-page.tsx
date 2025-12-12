@@ -3,21 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-<<<<<<< HEAD
-import { Award, Plus, Users, MessageSquare, Star, CheckCircle, Clock } from "lucide-react";
-import { motion } from "framer-motion";
-
-export default function FeedbackPage() {
-  const feedbackStats = [
-    { title: "Active Reviews", value: "24", icon: <MessageSquare className="h-5 w-5" /> },
-    { title: "Completed", value: "156", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
-    { title: "Pending Response", value: "18", icon: <Clock className="h-5 w-5" />, color: "bg-yellow-50 text-yellow-600" },
-    { title: "Avg Rating", value: "4.3", icon: <Star className="h-5 w-5" />, color: "bg-amber-50 text-amber-600" },
-  ];
-
-  const feedbackRequests = [
-    { 
-=======
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -64,17 +49,11 @@ export default function FeedbackPage() {
   const [feedbackRequests, setFeedbackRequests] = useState<FeedbackRequest[]>([
     { 
       id: 1,
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       employee: "John Doe", 
       department: "Engineering", 
       reviewers: ["Manager", "Peers", "Direct Reports"], 
       responsesReceived: 8,
       totalReviewers: 10,
-<<<<<<< HEAD
-      status: "In Progress"
-    },
-    { 
-=======
       status: "In Progress",
       feedbackData: [
         { reviewer: "Sarah Wilson (Manager)", rating: 4.5, strengths: "Strong technical skills, excellent problem solver", improvements: "Could improve on documentation" },
@@ -84,17 +63,11 @@ export default function FeedbackPage() {
     },
     { 
       id: 2,
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       employee: "Jane Smith", 
       department: "Marketing", 
       reviewers: ["Manager", "Peers"], 
       responsesReceived: 5,
       totalReviewers: 5,
-<<<<<<< HEAD
-      status: "Completed"
-    },
-    { 
-=======
       status: "Completed",
       feedbackData: [
         { reviewer: "Tom Brown (Manager)", rating: 4.8, strengths: "Creative campaigns, strong leadership", improvements: "Time management on large projects" },
@@ -103,7 +76,6 @@ export default function FeedbackPage() {
     },
     { 
       id: 3,
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       employee: "Mike Johnson", 
       department: "Sales", 
       reviewers: ["Manager", "Peers", "Direct Reports"], 
@@ -112,10 +84,7 @@ export default function FeedbackPage() {
       status: "In Progress"
     },
     { 
-<<<<<<< HEAD
-=======
       id: 4,
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
       employee: "Sarah Wilson", 
       department: "HR", 
       reviewers: ["Manager", "Peers"], 
@@ -123,10 +92,6 @@ export default function FeedbackPage() {
       totalReviewers: 6,
       status: "Not Started"
     },
-<<<<<<< HEAD
-  ];
-
-=======
   ]);
 
   const feedbackStats = [
@@ -139,7 +104,6 @@ export default function FeedbackPage() {
   const reviewerTypeOptions = ["Manager", "Peers", "Direct Reports", "Cross-functional"];
   const departments = ["Engineering", "Marketing", "Sales", "HR", "Finance", "Operations"];
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Completed": return "bg-green-100 text-green-700";
@@ -149,8 +113,6 @@ export default function FeedbackPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const handleReviewerTypeChange = (type: string, checked: boolean) => {
     if (checked) {
       setNewReview({ ...newReview, reviewerTypes: [...newReview.reviewerTypes, type] });
@@ -208,7 +170,6 @@ export default function FeedbackPage() {
     return matchesStatus && matchesSearch;
   });
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -221,11 +182,7 @@ export default function FeedbackPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">360° Feedback</h1>
             <p className="text-slate-500 mt-1">Collect comprehensive feedback from multiple sources</p>
           </div>
-<<<<<<< HEAD
-          <Button className="gap-2" data-testid="button-new-review">
-=======
           <Button className="gap-2" data-testid="button-new-review" onClick={() => setIsNewReviewOpen(true)}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Plus className="h-4 w-4" />
             New 360° Review
           </Button>
@@ -258,58 +215,6 @@ export default function FeedbackPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <Award className="h-5 w-5 text-teal-600" />
-              Active 360° Reviews
-            </CardTitle>
-            <CardDescription>Track feedback collection progress</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {feedbackRequests.map((feedback, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.05 }}
-                  className="p-4 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
-                  data-testid={`row-feedback-${index}`}
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h3 className="font-semibold text-slate-900">{feedback.employee}</h3>
-                        <Badge className={getStatusColor(feedback.status)}>{feedback.status}</Badge>
-                      </div>
-                      <p className="text-sm text-slate-600 mb-2">{feedback.department}</p>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {feedback.reviewers.map((reviewer, i) => (
-                          <Badge key={i} variant="outline" className="text-xs">{reviewer}</Badge>
-                        ))}
-                      </div>
-                      <div>
-                        <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-slate-600">Responses: {feedback.responsesReceived}/{feedback.totalReviewers}</span>
-                          <span className="font-medium">{Math.round((feedback.responsesReceived / feedback.totalReviewers) * 100)}%</span>
-                        </div>
-                        <Progress value={(feedback.responsesReceived / feedback.totalReviewers) * 100} className="h-2" />
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" data-testid={`button-view-${index}`}>
-                        View Results
-                      </Button>
-                      {feedback.status !== "Completed" && (
-                        <Button size="sm" data-testid={`button-remind-${index}`}>
-                          Send Reminder
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -392,13 +297,10 @@ export default function FeedbackPage() {
                   </motion.div>
                 ))
               )}
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </div>
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       {/* New 360 Review Dialog */}
       <Dialog open={isNewReviewOpen} onOpenChange={setIsNewReviewOpen}>
@@ -588,7 +490,6 @@ export default function FeedbackPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

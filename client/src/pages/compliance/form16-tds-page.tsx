@@ -3,10 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FileText, Download, Search, Calendar, IndianRupee, CheckCircle, Clock, AlertCircle, Loader2 } from "lucide-react";
-=======
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -18,28 +14,18 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { FileText, Download, Search, Calendar, IndianRupee, CheckCircle, Clock, AlertCircle, Loader2, Plus, FilePlus } from "lucide-react";
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { useToast } from "@/hooks/use-toast";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-<<<<<<< HEAD
-=======
 import { addCompanyHeader, addWatermark, addHRSignature, addFooter, addDocumentDate, generateReferenceNumber, addReferenceNumber, COMPANY_NAME, COMPANY_ADDRESS, HR_NAME, HR_DESIGNATION } from "@/lib/pdf-utils";
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
 export default function Form16TdsPage() {
   const [selectedYear, setSelectedYear] = useState("2023-24");
   const [searchQuery, setSearchQuery] = useState("");
   const [generatingAll, setGeneratingAll] = useState(false);
   const [generatingIndex, setGeneratingIndex] = useState<number | null>(null);
-<<<<<<< HEAD
-  const { toast } = useToast();
-
-  const tdsStats = [
-    { title: "Total TDS Deducted", value: "₹45,67,000", status: "success", icon: <IndianRupee className="h-5 w-5" /> },
-=======
   const [showBasicForm16Dialog, setShowBasicForm16Dialog] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -84,7 +70,6 @@ export default function Form16TdsPage() {
 
   const tdsStats = [
     { title: "Total TDS Deducted", value: "Rs.45,67,000", status: "success", icon: <IndianRupee className="h-5 w-5" /> },
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     { title: "Form 16 Generated", value: "142", status: "success", icon: <FileText className="h-5 w-5" /> },
     { title: "Pending Generation", value: "14", status: "warning", icon: <Clock className="h-5 w-5" /> },
     { title: "Filed with Dept", value: "128", status: "success", icon: <CheckCircle className="h-5 w-5" /> },
@@ -129,37 +114,6 @@ export default function Form16TdsPage() {
       year: 'numeric' 
     });
     
-<<<<<<< HEAD
-    doc.setFillColor(0, 128, 128);
-    doc.rect(0, 0, 210, 30, 'F');
-    
-    doc.setFontSize(18);
-    doc.setTextColor(255, 255, 255);
-    doc.text("FORM NO. 16", 105, 15, { align: 'center' });
-    doc.setFontSize(10);
-    doc.text("[See rule 31(1)(a)]", 105, 22, { align: 'center' });
-    
-    doc.setTextColor(0, 0, 0);
-    doc.setFontSize(12);
-    doc.text("Certificate under section 203 of the Income-tax Act, 1961", 105, 40, { align: 'center' });
-    doc.text(`for Tax Deducted at Source on Salary - FY ${selectedYear}`, 105, 48, { align: 'center' });
-    
-    doc.setFontSize(10);
-    doc.text(`Generated on: ${currentDate}`, 14, 60);
-    
-    doc.setFontSize(12);
-    doc.text("Part A - Details of Employer and Employee", 14, 75);
-    doc.setDrawColor(0, 128, 128);
-    doc.line(14, 78, 196, 78);
-    
-    autoTable(doc, {
-      startY: 82,
-      head: [],
-      body: [
-        ['Name of the Deductor (Employer)', 'HRMS Connect Pvt. Ltd.'],
-        ['TAN of the Deductor', 'MUMH12345F'],
-        ['Address of the Deductor', '123 Business Park, Mumbai, Maharashtra 400001'],
-=======
     addFooter(doc);
     
     doc.setTextColor(0, 0, 0);
@@ -196,26 +150,11 @@ export default function Form16TdsPage() {
         ['Name of the Deductor (Employer)', COMPANY_NAME],
         ['TAN of the Deductor', 'PNEC12345F'],
         ['Address of the Deductor', COMPANY_ADDRESS],
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
         ['Name of the Employee', employee.employee],
         ['PAN of the Employee', employee.pan],
         ['Assessment Year', selectedYear === '2023-24' ? '2024-25' : selectedYear === '2022-23' ? '2023-24' : '2022-23'],
       ],
       theme: 'grid',
-<<<<<<< HEAD
-      styles: { fontSize: 10 },
-      columnStyles: {
-        0: { fontStyle: 'bold', cellWidth: 70 },
-        1: { cellWidth: 100 },
-      },
-    });
-    
-    const partAEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 140;
-    
-    doc.setFontSize(12);
-    doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 15);
-    doc.line(14, partAEndY + 18, 196, partAEndY + 18);
-=======
       styles: { fontSize: 9 },
       columnStyles: {
         0: { fontStyle: 'bold', cellWidth: 70 },
@@ -230,7 +169,6 @@ export default function Form16TdsPage() {
     doc.text("Part B - Details of Salary Paid and Tax Deducted", 14, partAEndY + 12);
     doc.setDrawColor(0, 0, 0);
     doc.line(14, partAEndY + 15, 196, partAEndY + 15);
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     
     const basicSalary = Math.round(employee.totalIncome * 0.5);
     const hra = Math.round(employee.totalIncome * 0.2);
@@ -238,36 +176,6 @@ export default function Form16TdsPage() {
     const bonus = Math.round(employee.totalIncome * 0.1);
     
     autoTable(doc, {
-<<<<<<< HEAD
-      startY: partAEndY + 22,
-      head: [['Particulars', 'Amount (Rs.)']],
-      body: [
-        ['1. Gross Salary', `₹${employee.totalIncome.toLocaleString()}`],
-        ['   a) Basic Salary', `₹${basicSalary.toLocaleString()}`],
-        ['   b) House Rent Allowance', `₹${hra.toLocaleString()}`],
-        ['   c) Other Allowances', `₹${allowances.toLocaleString()}`],
-        ['   d) Bonus/Incentive', `₹${bonus.toLocaleString()}`],
-        ['2. Less: Standard Deduction u/s 16(ia)', '₹50,000'],
-        ['3. Net Taxable Income', `₹${(employee.totalIncome - 50000).toLocaleString()}`],
-        ['4. Tax Payable', `₹${employee.tdsDeducted.toLocaleString()}`],
-        ['5. Less: Rebate u/s 87A', '₹0'],
-        ['6. Tax Deducted at Source', `₹${employee.tdsDeducted.toLocaleString()}`],
-      ],
-      theme: 'striped',
-      headStyles: { fillColor: [0, 128, 128] },
-      styles: { fontSize: 10 },
-    });
-    
-    const partBEndY = (doc as typeof doc & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY || 220;
-    
-    doc.setFontSize(9);
-    doc.setTextColor(100);
-    doc.text("This is a computer-generated certificate and does not require a signature.", 105, partBEndY + 20, { align: 'center' });
-    
-    doc.save(`Form16_${employee.employee.replace(/\s+/g, '_')}_${selectedYear}.pdf`);
-  };
-
-=======
       startY: partAEndY + 19,
       head: [['Particulars', 'Amount (Rs.)']],
       body: [
@@ -393,7 +301,6 @@ export default function Form16TdsPage() {
     doc.save(`Form16_${basicForm16Data.employeeName.replace(/\s+/g, '_')}_${basicForm16Data.assessmentYear}.pdf`);
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   const handleGenerateForm16 = async (index: number) => {
     setGeneratingIndex(index);
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -449,8 +356,6 @@ export default function Form16TdsPage() {
     setGeneratingAll(false);
   };
 
-<<<<<<< HEAD
-=======
   const handleGenerateBasicForm16 = async () => {
     const grossSalaryValue = parseInt(basicForm16Data.grossSalary) || 0;
     const tdsValue = parseInt(basicForm16Data.tdsDeducted) || 0;
@@ -497,7 +402,6 @@ export default function Form16TdsPage() {
     resetBasicForm16();
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -510,11 +414,7 @@ export default function Form16TdsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Form 16 & TDS Management</h1>
             <p className="text-slate-500 mt-1">Manage TDS deductions and Form 16 generation</p>
           </div>
-<<<<<<< HEAD
-          <div className="flex gap-2">
-=======
           <div className="flex flex-wrap gap-2">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Select value={selectedYear} onValueChange={setSelectedYear}>
               <SelectTrigger className="w-32" data-testid="select-year">
                 <Calendar className="h-4 w-4 mr-2" />
@@ -528,8 +428,6 @@ export default function Form16TdsPage() {
               </SelectContent>
             </Select>
             <Button 
-<<<<<<< HEAD
-=======
               variant="outline"
               className="gap-2" 
               onClick={() => { resetBasicForm16(); setShowBasicForm16Dialog(true); }}
@@ -539,7 +437,6 @@ export default function Form16TdsPage() {
               Basic Form 16
             </Button>
             <Button 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
               className="gap-2" 
               onClick={handleGenerateAllForm16}
               disabled={generatingAll}
@@ -627,13 +524,8 @@ export default function Form16TdsPage() {
                       <tr key={row.id} className="border-b hover:bg-slate-50" data-testid={`row-tds-${index}`}>
                         <td className="py-3 px-4 font-medium">{row.employee}</td>
                         <td className="py-3 px-4 font-mono text-sm">{row.pan}</td>
-<<<<<<< HEAD
-                        <td className="py-3 px-4">₹{row.totalIncome.toLocaleString()}</td>
-                        <td className="py-3 px-4">₹{row.tdsDeducted.toLocaleString()}</td>
-=======
                         <td className="py-3 px-4">Rs.{row.totalIncome.toLocaleString()}</td>
                         <td className="py-3 px-4">Rs.{row.tdsDeducted.toLocaleString()}</td>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                         <td className="py-3 px-4">
                           <Badge className={getStatusColor(row.form16)}>{row.form16}</Badge>
                         </td>
@@ -682,8 +574,6 @@ export default function Form16TdsPage() {
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showBasicForm16Dialog} onOpenChange={setShowBasicForm16Dialog}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -908,7 +798,6 @@ export default function Form16TdsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }

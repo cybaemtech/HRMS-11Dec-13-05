@@ -2,15 +2,6 @@ import { AppLayout } from "@/components/layout/app-layout";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Scale, Download, CheckCircle, Clock, AlertTriangle, FileBarChart, Calendar } from "lucide-react";
-import { motion } from "framer-motion";
-import { useState } from "react";
-
-export default function ComplianceReportsPage() {
-  const [selectedYear, setSelectedYear] = useState("2023-24");
-=======
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -39,7 +30,6 @@ export default function ComplianceReportsPage() {
   const [showViewDialog, setShowViewDialog] = useState(false);
   const [selectedItem, setSelectedItem] = useState<ComplianceItem | null>(null);
   const { toast } = useToast();
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
 
   const complianceStats = [
     { title: "Compliant", value: "18", icon: <CheckCircle className="h-5 w-5" />, color: "bg-green-50 text-green-600" },
@@ -48,19 +38,6 @@ export default function ComplianceReportsPage() {
     { title: "Total Filings", value: "22", icon: <FileBarChart className="h-5 w-5" />, color: "bg-blue-50 text-blue-600" },
   ];
 
-<<<<<<< HEAD
-  const complianceItems = [
-    { name: "PF Monthly Return", frequency: "Monthly", lastFiled: "Jan 15, 2024", nextDue: "Feb 15, 2024", status: "Compliant" },
-    { name: "ESI Monthly Return", frequency: "Monthly", lastFiled: "Jan 12, 2024", nextDue: "Feb 11, 2024", status: "Compliant" },
-    { name: "Professional Tax", frequency: "Monthly", lastFiled: "Jan 5, 2024", nextDue: "Feb 5, 2024", status: "Pending" },
-    { name: "TDS Quarterly Return", frequency: "Quarterly", lastFiled: "Oct 15, 2023", nextDue: "Jan 15, 2024", status: "Overdue" },
-    { name: "Form 16 Issuance", frequency: "Annual", lastFiled: "Jun 10, 2023", nextDue: "Jun 15, 2024", status: "Compliant" },
-    { name: "Labour Welfare Fund", frequency: "Bi-Annual", lastFiled: "Dec 31, 2023", nextDue: "Jun 30, 2024", status: "Compliant" },
-    { name: "Gratuity Return", frequency: "Annual", lastFiled: "Dec 15, 2023", nextDue: "Dec 15, 2024", status: "Compliant" },
-    { name: "Annual Returns", frequency: "Annual", lastFiled: "Jan 31, 2023", nextDue: "Jan 31, 2024", status: "Pending" },
-  ];
-
-=======
   const complianceItems: ComplianceItem[] = [
     { id: 1, name: "PF Monthly Return", frequency: "Monthly", lastFiled: "Jan 15, 2024", nextDue: "Feb 15, 2024", status: "Compliant", description: "Monthly Provident Fund returns to be filed with EPFO", authority: "EPFO", penalty: "Rs. 5,000 per day delay" },
     { id: 2, name: "ESI Monthly Return", frequency: "Monthly", lastFiled: "Jan 12, 2024", nextDue: "Feb 11, 2024", status: "Compliant", description: "Monthly ESI contribution returns", authority: "ESIC", penalty: "Rs. 2,500 per day delay" },
@@ -77,7 +54,6 @@ export default function ComplianceReportsPage() {
     item.frequency.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   const getStatusColor = (status: string) => {
     switch (status) {
       case "Compliant": return "bg-green-100 text-green-700";
@@ -96,8 +72,6 @@ export default function ComplianceReportsPage() {
     }
   };
 
-<<<<<<< HEAD
-=======
   const handleView = (item: ComplianceItem) => {
     setSelectedItem(item);
     setShowViewDialog(true);
@@ -158,7 +132,6 @@ export default function ComplianceReportsPage() {
     });
   };
 
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
   return (
     <AppLayout>
       <div className="space-y-6">
@@ -171,11 +144,7 @@ export default function ComplianceReportsPage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">Compliance Reports</h1>
             <p className="text-slate-500 mt-1">Track statutory compliance status</p>
           </div>
-<<<<<<< HEAD
-          <div className="flex gap-2">
-=======
           <div className="flex gap-2 flex-wrap">
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             <Select value={selectedYear} onValueChange={setSelectedYear}>
               <SelectTrigger className="w-28" data-testid="select-year">
                 <Calendar className="h-4 w-4 mr-2" />
@@ -187,15 +156,9 @@ export default function ComplianceReportsPage() {
                 <SelectItem value="2021-22">2021-22</SelectItem>
               </SelectContent>
             </Select>
-<<<<<<< HEAD
-            <Button variant="outline" className="gap-2" data-testid="button-export">
-              <Download className="h-4 w-4" />
-              Export
-=======
             <Button variant="outline" className="gap-2" onClick={handleExportPDF} data-testid="button-export">
               <Download className="h-4 w-4" />
               Export PDF
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
             </Button>
           </div>
         </motion.div>
@@ -227,13 +190,6 @@ export default function ComplianceReportsPage() {
 
         <Card>
           <CardHeader>
-<<<<<<< HEAD
-            <CardTitle className="flex items-center gap-2">
-              <Scale className="h-5 w-5 text-teal-600" />
-              Compliance Status - FY {selectedYear}
-            </CardTitle>
-            <CardDescription>All statutory filings and their status</CardDescription>
-=======
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <CardTitle className="flex items-center gap-2">
@@ -253,7 +209,6 @@ export default function ComplianceReportsPage() {
                 />
               </div>
             </div>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -269,13 +224,8 @@ export default function ComplianceReportsPage() {
                   </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
-                  {complianceItems.map((item, index) => (
-                    <tr key={index} className="border-b hover:bg-slate-50" data-testid={`row-compliance-${index}`}>
-=======
                   {filteredItems.map((item, index) => (
                     <tr key={item.id} className="border-b hover:bg-slate-50" data-testid={`row-compliance-${index}`}>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                       <td className="py-3 px-4 font-medium">{item.name}</td>
                       <td className="py-3 px-4">
                         <Badge variant="outline">{item.frequency}</Badge>
@@ -289,12 +239,8 @@ export default function ComplianceReportsPage() {
                         </Badge>
                       </td>
                       <td className="py-3 px-4">
-<<<<<<< HEAD
-                        <Button size="sm" variant="outline" data-testid={`button-view-${index}`}>
-=======
                         <Button size="sm" variant="outline" onClick={() => handleView(item)} data-testid={`button-view-${index}`}>
                           <Eye className="h-4 w-4 mr-1" />
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
                           View Details
                         </Button>
                       </td>
@@ -306,8 +252,6 @@ export default function ComplianceReportsPage() {
           </CardContent>
         </Card>
       </div>
-<<<<<<< HEAD
-=======
 
       <Dialog open={showViewDialog} onOpenChange={setShowViewDialog}>
         <DialogContent className="max-w-lg">
@@ -356,7 +300,6 @@ export default function ComplianceReportsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
->>>>>>> b6842dc769db9515d23115028c02d6ffc14d7b9c
     </AppLayout>
   );
 }
