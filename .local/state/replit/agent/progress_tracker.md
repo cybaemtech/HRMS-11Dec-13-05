@@ -267,3 +267,12 @@
 [x] 236. TRAINING & DEVELOPMENT - Certifications: Enhanced with Add/Edit/Delete certification dialogs, View modal, Renew certification, Download certificate PDF, status filter, search, Export Report
 [x] 237. TRAINING & DEVELOPMENT - Training Requests: Enhanced with New Request dialog, View/Edit modals, Approve/Reject with reason, status filter, search, Export PDF report
 [x] 238. December 12, 2025: All Training & Development section pages now have full button, filter, and dialog functionality
+[x] 239. PAYROLL - Payslip Generation & Bank Transfers: Added tabbed interface with Payslips and Bank Transfers tabs
+[x] 240. PAYROLL - Payslip Generation: Generate All button with confirmation dialog, Generate individual payslips for pending employees
+[x] 241. PAYROLL - Payslip Generation: Email All button to send payslips to all employees, Email individual payslip with confirmation dialog
+[x] 242. PAYROLL - Payslip Generation: View button showing detailed payslip breakdown (earnings, deductions, bank details)
+[x] 243. PAYROLL - Payslip Generation: Download PDF payslip with ASN branding, Print button, search and status filter
+[x] 244. PAYROLL - Bank Transfers: Select individual/all pending transfers, Process Selected transfers with confirmation
+[x] 245. PAYROLL - Bank Transfers: View transfer details dialog showing bank info, amount, status, reference
+[x] 246. PAYROLL - Bank Transfers: Export Report PDF with transfer summary and details
+[x] 247. December 12, 2025: Payslip Generation & Bank Transfers page fully functional with all CRUD operations
