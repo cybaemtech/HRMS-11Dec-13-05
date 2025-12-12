@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
 import { Users, Mail, Phone, MapPin, Building2, Calendar, Edit, Camera } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 export default function MyProfilePage() {
   const { user } = useAuth();
@@ -39,10 +40,12 @@ export default function MyProfilePage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">My Profile</h1>
             <p className="text-slate-500 mt-1">View and manage your personal information</p>
           </div>
-          <Button className="gap-2" data-testid="button-edit-profile">
-            <Edit className="h-4 w-4" />
-            Edit Profile
-          </Button>
+          <Link href="/settings">
+            <Button className="gap-2" data-testid="button-edit-profile">
+              <Edit className="h-4 w-4" />
+              Edit Profile
+            </Button>
+          </Link>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -64,7 +67,7 @@ export default function MyProfilePage() {
               </h2>
               <p className="text-slate-500">{user?.position || "Employee"}</p>
               <Badge className="mt-2" variant="secondary">{user?.departmentId ? `Department ${user.departmentId}` : "N/A"}</Badge>
-              
+
               <div className="mt-6 pt-6 border-t space-y-3 text-left">
                 {profileInfo.personalInfo.map((info, index) => (
                   <div key={index} className="flex items-center gap-3 text-sm">
