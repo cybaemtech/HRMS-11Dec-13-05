@@ -6,9 +6,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
 import { Users, Mail, Phone, MapPin, Building2, Calendar, Edit, Camera } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLocation } from "wouter";
 
 export default function MyProfilePage() {
   const { user } = useAuth();
+  const [, setLocation] = useLocation();
 
   const profileInfo = {
     personalInfo: [
@@ -39,7 +41,7 @@ export default function MyProfilePage() {
             <h1 className="text-2xl font-bold text-slate-900" data-testid="text-page-title">My Profile</h1>
             <p className="text-slate-500 mt-1">View and manage your personal information</p>
           </div>
-          <Button className="gap-2" data-testid="button-edit-profile">
+          <Button className="gap-2" onClick={() => setLocation("/settings")} data-testid="button-edit-profile">
             <Edit className="h-4 w-4" />
             Edit Profile
           </Button>
